@@ -1,0 +1,65 @@
+<!-- views/login.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+	
+    <link href="/cssFiles/css.css" rel="stylesheet" type="text/css">
+    <link href="/cssFiles/toolkit.css" rel="stylesheet">
+    <link href="/cssFiles/application.css" rel="stylesheet">
+
+    <style>
+		body 		{ padding-top:80px; }
+	</style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="col-sm-6 col-sm-offset-3">
+            
+            
+            <!-- LOGIN FORM -->
+            <form action="/login" role="form" class="adq arx j" method="post">
+                  <div class="jt">
+                  <img src="/cssFiles/logo.png" alt="brand" style="height: 70px; width:200px;  margin-right: 0px; " >
+                  </div>
+                  <br/>
+                  <div class="jt">
+                    <input class="form-control" placeholder="Username" name="username">
+                  </div>
+
+                  <div class="jt abd">
+                    <input class="form-control" placeholder="Password" type="password" name="password">
+                  </div>
+
+                  <div class="abr">
+                    <button class="cg kr">Log In</button>
+                    <button class="cg kt">Sign up</button>
+                  </div>
+
+              <footer class="bmx">
+                <a href="#" class="asz">Forgot password</a>
+              </footer>
+            </form>
+
+            <hr>
+
+            <!-- show any messages that come back with authentication -->
+            <% if (message.length > 0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+
+            <p>Need an account? <a href="/signup">Signup</a></p>
+            <p>Or go <a href="/">home</a>.</p>
+        </div>
+    </div>
+
+    <script>
+
+      $(function(){while(window.BS&&window.BS.loader&&window.BS.loader.length){(window.BS.loader.pop())()}})
+    </script>
+
+</body>
+</html>
