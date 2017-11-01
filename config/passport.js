@@ -12,6 +12,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;//Oauth
 var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 var dbconfig = require('./database');
+var cookieParser = require('cookie-parser');
 var connection = mysql.createConnection(dbconfig.connection);
 
 //var User       = require('../app/models/user'); //Oauth
@@ -76,6 +77,8 @@ module.exports = function(passport) {
                            connection.query(insertQuery,[newUserMysql.username, newUserMysql.password],function(err, rows) {
                           if (err) throw err;
                             console.log("1 record inserted");
+                            newUserMysql.id = rows.insertId;
+                            return done(null, newUserMysql);
                     });
 
                 }
@@ -123,16 +126,16 @@ module.exports = function(passport) {
     //-----------------------------------------------------------Oauth.......................................................................................
 
     // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
-        done(null, 3);
-    });
+    ////passport.serializeUser(function(user, done) {
+    ////    done(null, 3);
+    ////});
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
-    });
+    ////passport.deserializeUser(function(id, done) {
+    ////    User.findById(id, function(err, user) {
+    ////        done(err, user);
+    ////    });
+    ////});
 
     // code for login (use('local-login', new LocalStategy))
     // code for signup (use('local-signup', new LocalStategy))

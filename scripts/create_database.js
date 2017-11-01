@@ -9,6 +9,9 @@ var connection = mysql.createConnection(dbconfig.connection);
 
 connection.query('CREATE DATABASE ' + dbconfig.database);
 
+
+// This is only testing DB Not working with Employee Hub
+
 connection.query('\
 CREATE TABLE `' + dbconfig.database + '`.`' + dbconfig.users_table + '` ( \
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, \

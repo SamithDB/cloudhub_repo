@@ -1,3 +1,7 @@
+
+//Testing code...... working with MongoDB.......................... converting to mysql ... Todo...
+
+
 // load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');

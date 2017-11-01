@@ -1,7 +1,6 @@
 // server.js
 
 // set up ======================================================================
-// get all the tools we need
 var express  = require('express');
 var session  = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -14,7 +13,7 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 
 // configuration ===============================================================
-// connect to our database
+// connect to database
 
 require('./config/passport')(passport); // pass passport for configuration
 
