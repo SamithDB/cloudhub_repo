@@ -2,9 +2,6 @@
 
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
-var LocalStrategy    = require('passport-local').Strategy;           //Oauth
-var FacebookStrategy = require('passport-facebook').Strategy;        //Oauth
-var TwitterStrategy  = require('passport-twitter').Strategy;         //Oauth
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;//Oauth
 
 
@@ -32,7 +29,7 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-        done(null, user.id);
+            done(null, user.idlogin);
     });
 
     // used to deserialize the user
@@ -56,32 +53,41 @@ module.exports = function(passport) {
             passwordField : 'password',
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
-        function(req, username, password, lname, fname, done) {
+        function(req, username, password, done) {
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            var newUserMysql = {
-                        username: username,
-                        password: bcrypt.hashSync(password, null, null)  // use the generateHash function in our user model
-                    };
-
             connection.query("SELECT * FROM login WHERE username = ?",[username], function(err, rows) {
                 if (err)
                     return done(err);
                 if (rows.length) {
                     return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
-                } else {
-                    
+                } else if(password == req.body.password2){
+                    // if there is no user with that username
+                    // create the user
+                    var newUserMysql = new Object();
+                        newUserMysql.username = username;
+                        newUserMysql.password = bcrypt.hashSync(password, null, null);  // use the generateHash function in our user model
                         
-                          console.log("Connected!");
-                          var insertQuery = "INSERT INTO login ( username, password ) values (?,?)";
-                           connection.query(insertQuery,[newUserMysql.username, newUserMysql.password],function(err, rows) {
-                          if (err) throw err;
-                            console.log("1 record inserted");
-                            newUserMysql.id = rows.insertId;
-                            return done(null, newUserMysql);
-                    });
+                        console.log("Connected!");
+                        var insertQuery = "INSERT INTO login ( username, password ) values (?,?)";
+                        connection.query(insertQuery,[newUserMysql.username, newUserMysql.password],function(err, rows) {
+                        if (err) throw err;
+                        console.log("1 record inserted to login");
+                        newUserMysql.idlogin = rows.insertId;
+						
+							var insertQuery = "INSERT INTO employee ( fname, lname, login_idlogin ) values (?,?,?)";
+							connection.query(insertQuery,[req.body.fname, req.body.lname, newUserMysql.idlogin],function(err, rows) {
+								if (err) throw err;
+								console.log("1 record inserted employee");
+							});
+							
+                        console.log(req.body.fname);
+                        return done(null, newUserMysql);
 
-                }
+
+
+                    });
+                }else{return done(null, false, req.flash('signupMessage', 'Passwords not matched.'));}
             });
         })
     );
@@ -123,24 +129,6 @@ module.exports = function(passport) {
 
 
 
-    //-----------------------------------------------------------Oauth.......................................................................................
-
-    // used to serialize the user for the session
-    ////passport.serializeUser(function(user, done) {
-    ////    done(null, 3);
-    ////});
-
-    // used to deserialize the user
-    ////passport.deserializeUser(function(id, done) {
-    ////    User.findById(id, function(err, user) {
-    ////        done(err, user);
-    ////    });
-    ////});
-
-    // code for login (use('local-login', new LocalStategy))
-    // code for signup (use('local-signup', new LocalStategy))
-    // code for facebook (use('facebook', new FacebookStrategy))
-    // code for twitter (use('twitter', new TwitterStrategy))
 
     // =========================================================================
     // GOOGLE ==================================================================
@@ -155,34 +143,21 @@ module.exports = function(passport) {
     function(token, refreshToken, profile, done) {
 
         // make the code asynchronous
-        // User.findOne won't fire until we have all our data back from Google
         process.nextTick(function() {
 
-            // try to find the user based on their google id
-            User.findOne({ 'google.id' : profile.id }, function(err, user) {
-                if (err)
-                    return done(err);
+            // try to find the user based on their email
+            connection.query("SELECT * FROM login WHERE username = ?",[profile.emails[0].value], function(err, user){
+                
+				if (err)
+					return done(err);
 
                 if (user) {
-
-                    // if a user is found, log them in
-                    return done(null, user);
+					
+                    return done(null, user[0]);
                 } else {
-                    // if the user isnt in our database, create a new user
-                    var newUser          = new User();
-
-                    // set all of the relevant information
-                    newUser.google.id    = profile.id;
-                    newUser.google.token = token;
-                    newUser.google.name  = profile.displayName;
-                    newUser.google.email = profile.emails[0].value; // pull the first email
-
-                    // save the user
-                    newUser.save(function(err) {
-                        if (err)
-                            throw err;
-                        return done(null, newUser);
-                    });
+                    
+					return done(null, false, req.flash('loginMessage', 'You are not authorized. Please signup first')); 
+					
                 }
             });
         });

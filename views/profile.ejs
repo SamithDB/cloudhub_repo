@@ -1,13 +1,43 @@
 <!-- views/profile.ejs -->
 <!doctype html>
-<html>
+<html lang="en" ng-app>
 <head>
 	<title>Node Authentication</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+	<link href="/cssFiles/css.css" rel="stylesheet" type="text/css">
+    <link href="/cssFiles/toolkit.css" rel="stylesheet">
+    <link href="/cssFiles/application.css" rel="stylesheet">
+
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
+
+	<script>
+	  function resizeIframe(obj) {
+		obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+	  }
+	</script>
+
+    <style>
+      body {
+        width: 1px;
+        min-width: 100%;
+        *width: 100%;
+      }
+    </style>
+	
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('formCtrl', function($scope) {
+            $scope.firstname = "John";
+        });
+    </script>
+
+
 </head>
 <body>
 <div class="container">
@@ -19,22 +49,213 @@
 
 	<div class="row">
 
-		<!-- LOCAL INFORMATION -->
+		<!-- LOCAL INFORMATION 
 		<div class="col-sm-6">
 			<div class="well">
 				<h3><span class="fa fa-user"></span> Local</h3>
 
 					<p>
-						<strong>id</strong>: <%= user.id %><br>
+						<strong>id</strong>: <%= user.idlogin %><br>
 						<strong>username</strong>: <%= user.username %><br>
 						<strong>password</strong>: <%= user.password %>
 					</p>
 
 			</div>
+		</div>-->
+
+		<div class="row-md-*">
+ 		<div class="col-md-4" >
+    	<div class="mu sh sp abk">
+        <div class="mv">
+        <div class="mu blf abk">
+        <div class="na" style="background-image: url(assets/img/iceland.jpg);"></div>
+        <div class="mv arx">
+          <a href="https://bootstrap-themes.github.io/application/profile/index.html">
+            <img class="blg" src="/cssFiles/profile_pic.png">
+            
+          </a>
+
+          <h6 class="mw">
+            <a class="bjx" href="https://bootstrap-themes.github.io/application/profile/index.html"> <label class="control-label" style="color: #336666">{{Fname}} {{Lname}}</label>
+            </a>
+          </h6>
+
+          <p class="abk">I wish i was a little bit taller, wish i was a baller, wish i had a car…&nbsp;also.</p>
+
+          <ul class="blh">
+            <li class="bli">
+              <a href="" class="bjx" data-toggle="modal">
+                Get
+                <h6 class="aal">Link</h6>
+              </a>
+            </li>
+
+            <li class="bli">
+              <a href="" class="bjx" data-toggle="modal">
+                Get
+                <h6 class="aal">Link</h6>
+              </a>
+            </li>
+          </ul>
+        </div>
+      	</div>
+          
+        </div>
+<!--
+      <div class="mu sh sp abk">
+        <div class="mv">
+          <h6 class="abd">About <small>· <a href="">Edit</a></small></h6>
+          <ul class="dc atd">
+            <li><span class="asz h awk abc"></span>Position <a href="">SE</a>
+            </li><li><span class="asz h bbn abc"></span>Lives in <a href="">Colombo 10, SL</a>
+            </li><li><span class="asz h bcw abc"></span>From <a href="">Kurunegala, SL</a>
+      </li><li><span class="asz h bax abc"></span>LinkedIn <a href="">URL</a>
+          </li></ul>
+        </div>
+      </div>
+-->
+      
+    	</div>
+
+
 		</div>
+
+
+           <div class="col-md-4">
+            
+                  <div class="mu sh sp abk">
+                     <div class="mv">
+                  <form>
+                  <div class="form-group" style="margin-top: 20px;" >
+                    <label for="exampleInputEmail1">Email address</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.username %></label> <!--datadase connecting point-->
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">First Name</label><br>
+                    <label class="control-label" style="color: #336666">{{Fname}}</label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Last Name</label><br>
+                    <label class="control-label" style="color: #336666">{{Lname}}</label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Employee Number</label><br>
+                    <label class="control-label" style="color: #336666">{{Enum}}</label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">EPF Number</label><br>
+                    <label class="control-label" style="color: #336666">{{EPFnum}}</label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Companies</label><br>
+                    <label class="control-label" style="color: #336666">{{Companies}}</label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Birth Day</label><br>
+                    <label class="control-label" style="color: #336666">{{Birthday}}</label><!--datadase connecting point--> 
+                  </div>
+                  
+                  <!-- Trigger the modal with a button -->
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Edit</button>
+                  <!-- Password change the modal with a button -->
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Change Password</button>
+                </form>
+           </div>
+         </div>
+        </div>
+<!-- Calender Section ----------------------------------------------------------------------------------------------------------------------- -->
+		<div class="col-md-4" " >
+		   
+		        <div class="mv" style="min-height: 470px" >
+		          <center>
+		           <iframe src="https://calendar.google.com/calendar/embed?src=cloudpartners.biz_mmfv7u05m6dpnrf2k1dcoe4kpg%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0" width="auto" height="450" frameborder="0" scrolling="no"></iframe></center>
+		        </div>
+		     
+		</div>
+
 
 	</div>
 
 </div>
+
+<!--PopUp edit panel ------------------------------------------------------------------------------------------------------------------------- -->
+
+<script>
+      // execute/clear BS loaders for docs
+      $(function(){while(window.BS&&window.BS.loader&&window.BS.loader.length){(window.BS.loader.pop())()}})
+    </script>
+ 
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"></button>
+          <h4 class="modal-title">Edit Youe Data</h4>
+        </div>
+        <div class="modal-body">
+         
+             <form>
+                  <div class="form-group" >
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="text" class="form-control" ng-model="Email" id="exampleInputEmail1" placeholder="{{Email}}" >
+                  </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Password</label>
+                          
+                           
+                          <input type="password" class="form-control" ng-model="Password" id="exampleInputPassword1" placeholder="{{Password}}">
+                        </div>
+                           <div class="form-group" >
+                            <label for="exampleInputEmail1">First Name</label>
+                            <input type="text" class="form-control" ng-model="Fname" id="exampleInputEmail1" placeholder="{{Fname}}" >
+                          </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Last Name</label>
+                               
+                                 
+                                <input type="text" class="form-control" ng-model="Lname" id="exampleInputPassword1" placeholder="{{Lname}}">
+                              </div>
+                                 <div class="form-group" >
+                                   <label for="exampleInputEmail1">Employee Number</label>
+                                   <input type="text" class="form-control" ng-model="Enum" id="exampleInputEmail1" placeholder="{{Enum}}" >
+                                   </div>
+                                    <div class="form-group">
+                                      <label for="exampleInputPassword1">EPF Number</label>
+
+                                      <input type="text" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" placeholder="{{EPFnum}}">
+                                    </div>
+                                        <div class="form-group" >
+                                            <label for="exampleInputEmail1">Companies</label>
+                                            <input type="text" class="form-control" ng-model="Companies" id="exampleInputEmail1" placeholder="{{Companies}}" >
+                                          </div>
+                                            <div class="form-group">
+                                              <label for="exampleInputPassword1">Birthday</label>
+                                             
+                                               
+                                              <input type="data" class="form-control" ng-model="Birthday" id="exampleInputPassword1" placeholder="{{Password}}">
+                                            </div>
+
+                  <button type="submit" class="btn btn-default">Submit</button>
+                  <!-- Trigger the modal with a button -->
+                 </form>
+            
+         
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!--------------------------------------------------------------------------------------------------------------------- -->
+
 </body>
 </html>
