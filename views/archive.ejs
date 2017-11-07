@@ -1,0 +1,41 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Employee Archive</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+	<style>
+		body 		{ padding-top:80px; }
+	</style>
+    <link href="/cssFiles/css.css" rel="stylesheet" type="text/css">
+    <link href="/cssFiles/toolkit.css" rel="stylesheet">
+    <link href="/cssFiles/application.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Archive</h1>
+        <div class="jumbotron text-center">
+            
+            <form action="/archive" enctype="multipart/form-data" role="form" class="adq arx j" method="post">
+                  <br/>
+                  <div class="jt">
+                  <img src="/cssFiles/logo.png" alt="brand" style="height: 70px; width:200px;  margin-right: 0px; " >
+                  </div>
+                  <br/>
+                  <div class="jt">
+                    <label >File Uploader: </label><br>
+                     <input type="file", name="file", class="form-control">
+                  </div>
+
+                  <div class="abr">
+                    <button class="cg kr">Upload</button>
+                  </div>
+
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

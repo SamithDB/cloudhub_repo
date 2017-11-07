@@ -75,8 +75,8 @@ module.exports = function(passport) {
                         console.log("1 record inserted to login");
                         newUserMysql.idlogin = rows.insertId;
 						
-							var insertQuery = "INSERT INTO employee ( fname, lname, login_idlogin ) values (?,?,?)";
-							connection.query(insertQuery,[req.body.fname, req.body.lname, newUserMysql.idlogin],function(err, rows) {
+							var insertQuery = "INSERT INTO employee ( fname, lname, login_idlogin, username ) values (?,?,?,?)";
+							connection.query(insertQuery,[req.body.fname, req.body.lname, newUserMysql.idlogin,newUserMysql.username],function(err, rows) {
 								if (err) throw err;
 								console.log("1 record inserted employee");
 							});
@@ -152,8 +152,9 @@ module.exports = function(passport) {
 					return done(err);
 
                 if (user) {
-					
+
                     return done(null, user[0]);
+
                 } else {
                     
 					return done(null, false, req.flash('loginMessage', 'You are not authorized. Please signup first')); 

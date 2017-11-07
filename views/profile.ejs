@@ -1,6 +1,6 @@
 <!-- views/profile.ejs -->
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" >
 <head>
 	<title>Node Authentication</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -30,17 +30,20 @@
       }
     </style>
 	
-    <script>
-        var app = angular.module('myApp', []);
-        app.controller('formCtrl', function($scope) {
-            $scope.firstname = "John";
-        });
+
+      <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+    $scope.Fname = user.fname ;
+    });
     </script>
 
 
 </head>
 <body>
 <div class="container">
+ <div ng-app="myApp" ng-controller="myCtrl">
+
 
 	<div class="page-header text-center">
 		<h1><span class="fa fa-anchor"></span> Profile Page</h1>
@@ -64,7 +67,7 @@
 		</div>-->
 
 		<div class="row-md-*">
- 		<div class="col-md-4" >
+ 		<div class="col-md-3" >
     	<div class="mu sh sp abk">
         <div class="mv">
         <div class="mu blf abk">
@@ -76,7 +79,7 @@
           </a>
 
           <h6 class="mw">
-            <a class="bjx" href="https://bootstrap-themes.github.io/application/profile/index.html"> <label class="control-label" style="color: #336666">{{Fname}} {{Lname}}</label>
+            <a class="bjx" href="https://bootstrap-themes.github.io/application/profile/index.html"> <label class="control-label" style="color: #336666">{{Fname}} {{lname}}</label>
             </a>
           </h6>
 
@@ -85,8 +88,8 @@
           <ul class="blh">
             <li class="bli">
               <a href="" class="bjx" data-toggle="modal">
-                Get
-                <h6 class="aal">Link</h6>
+                Archive
+                <h6 class="aal"><a href="/archive" class="btn btn-default"><span class="fa fa-user"></span>Link</a></h6>
               </a>
             </li>
 
@@ -125,7 +128,12 @@
             
                   <div class="mu sh sp abk">
                      <div class="mv">
-                  <form>
+                  <form >
+                 <div class="form-group">
+                    <label for="exampleInputPassword1">Employee Number</label><br>
+                    <label class="control-label" style="color: #336666">EMP <%= user.login_idlogin %></label><!--datadase connecting point--> 
+                  </div>
+
                   <div class="form-group" style="margin-top: 20px;" >
                     <label for="exampleInputEmail1">Email address</label><br>
                     <label class="control-label" style="color: #336666"><%= user.username %></label> <!--datadase connecting point-->
@@ -133,27 +141,23 @@
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">First Name</label><br>
-                    <label class="control-label" style="color: #336666">{{Fname}}</label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666" ng-model="fname"><%= user.fname %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Last Name</label><br>
-                    <label class="control-label" style="color: #336666">{{Lname}}</label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= user.lname %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Employee Number</label><br>
-                    <label class="control-label" style="color: #336666">{{Enum}}</label><!--datadase connecting point--> 
+                    <label for="exampleInputPassword1">NIC Number</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.nic %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">EPF Number</label><br>
-                    <label class="control-label" style="color: #336666">{{EPFnum}}</label><!--datadase connecting point--> 
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Companies</label><br>
-                    <label class="control-label" style="color: #336666">{{Companies}}</label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= user.EPF %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Birth Day</label><br>
-                    <label class="control-label" style="color: #336666">{{Birthday}}</label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= user.birthday %></label><!--datadase connecting point--> 
                   </div>
                   
                   <!-- Trigger the modal with a button -->
@@ -165,14 +169,26 @@
          </div>
         </div>
 <!-- Calender Section ----------------------------------------------------------------------------------------------------------------------- -->
-		<div class="col-md-4" " >
-		   
-		        <div class="mv" style="min-height: 470px" >
-		          <center>
-		           <iframe src="https://calendar.google.com/calendar/embed?src=cloudpartners.biz_mmfv7u05m6dpnrf2k1dcoe4kpg%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0" width="auto" height="450" frameborder="0" scrolling="no"></iframe></center>
-		        </div>
-		     
-		</div>
+		
+    <div class="col-md-5" " >
+    <div class="mu sh sp abk">
+
+        <div class="mv">
+            <div class="embed-responsive embed-responsive-4by3">
+              <center>
+           <iframe class="embed-responsive-item" src="https://calendar.google.com/calendar/embed?src=cloudpartners.biz_mmfv7u05m6dpnrf2k1dcoe4kpg%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0"  frameborder="0" scrolling="no"></iframe></center>
+        </div>
+       </div>
+    <div class="mu sh sp abk">
+        <div class="mv">
+          <center>
+            <div class="embed-responsive embed-responsive-4by3">
+           <iframe src="https://calendar.google.com/calendar/embed?src=32sbb14ul1v9irvgu6nhd1gr14%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0" frameborder="0" scrolling="no"></iframe></center>
+        </div>
+      </div>
+   
+    </div>
+    </div>  
 
 
 	</div>
@@ -256,6 +272,6 @@
   </div>
 
   <!--------------------------------------------------------------------------------------------------------------------- -->
-
+</div>
 </body>
 </html>
