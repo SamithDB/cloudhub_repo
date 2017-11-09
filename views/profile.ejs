@@ -2,22 +2,22 @@
 <!doctype html>
 <html lang="en" >
 <head>
-	<title>Node Authentication</title>
+	<title>Profile</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<link href="/cssFiles/css.css" rel="stylesheet" type="text/css">
-    <link href="/cssFiles/toolkit.css" rel="stylesheet">
-    <link href="/cssFiles/application.css" rel="stylesheet">
+  <link href="/cssFiles/toolkit.css" rel="stylesheet">
+  <link href="/cssFiles/application.css" rel="stylesheet">
+  <link href="/cssFiles/sticky-footer-navbar.css" rel="stylesheet">
 
-	<style>
-		body 		{ padding-top:80px; word-wrap:break-word; }
-	</style>
 
 	<script>
-	  function resizeIframe(obj) {
+	  function resizeIframe(obj) 
+    {
 		obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
 	  }
 	</script>
@@ -28,75 +28,68 @@
         min-width: 100%;
         *width: 100%;
       }
+        footer {
+        background-color: #546E7A ;
+        color: white;
+        padding: 15px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: white;
+        display: inline;
+      }
+
     </style>
-	
-
-      <script>
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope) {
-    $scope.Fname = user.fname ;
-    });
-    </script>
 
 
-</head>
+  </head>
+
+<%- include header.ejs %>
+
 <body>
+
+
+
 <div class="container">
  <div ng-app="myApp" ng-controller="myCtrl">
 
-
-	<div class="page-header text-center">
-		<h1><span class="fa fa-anchor"></span> Profile Page</h1>
-		<a href="/logout" class="btn btn-default btn-sm">Logout</a>
-	</div>
+  
 
 	<div class="row">
 
-		<!-- LOCAL INFORMATION 
-		<div class="col-sm-6">
-			<div class="well">
-				<h3><span class="fa fa-user"></span> Local</h3>
-
-					<p>
-						<strong>id</strong>: <%= user.idlogin %><br>
-						<strong>username</strong>: <%= user.username %><br>
-						<strong>password</strong>: <%= user.password %>
-					</p>
-
-			</div>
-		</div>-->
+		
 
 		<div class="row-md-*">
  		<div class="col-md-3" >
+
     	<div class="mu sh sp abk">
         <div class="mv">
         <div class="mu blf abk">
         <div class="na" style="background-image: url(assets/img/iceland.jpg);"></div>
         <div class="mv arx">
-          <a href="https://bootstrap-themes.github.io/application/profile/index.html">
+          <a >
             <img class="blg" src="/cssFiles/profile_pic.png">
-            
           </a>
 
           <h6 class="mw">
-            <a class="bjx" href="https://bootstrap-themes.github.io/application/profile/index.html"> <label class="control-label" style="color: #336666">{{Fname}} {{lname}}</label>
+             <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %> </label>
             </a>
           </h6>
 
-          <p class="abk">I wish i was a little bit taller, wish i was a baller, wish i had a car…&nbsp;also.</p>
+          <p class="abk"><%= user.description %></p>
 
           <ul class="blh">
             <li class="bli">
               <a href="" class="bjx" data-toggle="modal">
                 Archive
-                <h6 class="aal"><a href="/archive" class="btn btn-default"><span class="fa fa-user"></span>Link</a></h6>
+                <h6 class="aal"><a href="/archive" class="btn btn-default">Link</a></h6>
               </a>
             </li>
-
             <li class="bli">
               <a href="" class="bjx" data-toggle="modal">
-                Get
-                <h6 class="aal">Link</h6>
+                Change
+                <h6 class="aal"><a href="" class="btn btn-default">Link</a></h6>
               </a>
             </li>
           </ul>
@@ -104,19 +97,17 @@
       	</div>
           
         </div>
-<!--
+
       <div class="mu sh sp abk">
         <div class="mv">
           <h6 class="abd">About <small>· <a href="">Edit</a></small></h6>
           <ul class="dc atd">
-            <li><span class="asz h awk abc"></span>Position <a href="">SE</a>
-            </li><li><span class="asz h bbn abc"></span>Lives in <a href="">Colombo 10, SL</a>
-            </li><li><span class="asz h bcw abc"></span>From <a href="">Kurunegala, SL</a>
-      </li><li><span class="asz h bax abc"></span>LinkedIn <a href="">URL</a>
-          </li></ul>
+            <li><span class="asz h awk abc"></span>Position <label style="color: #336666"><%= user.designation %></label>
+            </li><li><span class="asz h bbn abc"></span>Contact Number <label style="color: #336666"><%= user.contact %></label>
+            </li></ul>
         </div>
       </div>
--->
+
       
     	</div>
 
@@ -126,8 +117,9 @@
 
            <div class="col-md-4">
             
-                  <div class="mu sh sp abk">
-                     <div class="mv">
+                <div class="mu sh sp abk">
+                <div class="mv">
+
                   <form >
                  <div class="form-group">
                     <label for="exampleInputPassword1">Employee Number</label><br>
@@ -141,7 +133,7 @@
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">First Name</label><br>
-                    <label class="control-label" style="color: #336666" ng-model="fname"><%= user.fname %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666" ><%= user.fname %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Last Name</label><br>
@@ -159,119 +151,129 @@
                     <label for="exampleInputPassword1">Birth Day</label><br>
                     <label class="control-label" style="color: #336666"><%= user.birthday %></label><!--datadase connecting point--> 
                   </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Address</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.address %></label><!--datadase connecting point--> 
+                  </div>
                   
                   <!-- Trigger the modal with a button -->
-                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Edit</button>
-                  <!-- Password change the modal with a button -->
-                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Change Password</button>
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Update Details</button>
                 </form>
-           </div>
-         </div>
+            </div>
+            </div>
         </div>
-<!-- Calender Section ----------------------------------------------------------------------------------------------------------------------- -->
+<!-- Calender Section  -->
 		
-    <div class="col-md-5" " >
-    <div class="mu sh sp abk">
+      <div class="col-md-5" " >
+      <div class="mu sh sp abk">
 
-        <div class="mv">
-            <div class="embed-responsive embed-responsive-4by3">
-              <center>
-           <iframe class="embed-responsive-item" src="https://calendar.google.com/calendar/embed?src=cloudpartners.biz_mmfv7u05m6dpnrf2k1dcoe4kpg%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0"  frameborder="0" scrolling="no"></iframe></center>
-        </div>
-       </div>
-    <div class="mu sh sp abk">
-        <div class="mv">
-          <center>
-            <div class="embed-responsive embed-responsive-4by3">
-           <iframe src="https://calendar.google.com/calendar/embed?src=32sbb14ul1v9irvgu6nhd1gr14%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0" frameborder="0" scrolling="no"></iframe></center>
-        </div>
+          <div class="mv">
+              <div class="embed-responsive embed-responsive-4by3">
+                <center>
+                <iframe src="https://calendar.google.com/calendar/embed?src=32sbb14ul1v9irvgu6nhd1gr14%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0" frameborder="0" scrolling="no"></iframe>
+                </center>
+          </div>
+          </div>
+     
       </div>
-   
-    </div>
-    </div>  
+      </div>  
 
+
+<!-- Calender Section -->
 
 	</div>
 
 </div>
 
-<!--PopUp edit panel ------------------------------------------------------------------------------------------------------------------------- -->
+<!--PopUp edit panel -->
 
-<script>
-      // execute/clear BS loaders for docs
-      $(function(){while(window.BS&&window.BS.loader&&window.BS.loader.length){(window.BS.loader.pop())()}})
-    </script>
- 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
-      <!-- Modal content-->
-      <div class="modal-content">
+    <!-- Modal content-->
+            <div class="modal-content">
 
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"></button>
-          <h4 class="modal-title">Edit Youe Data</h4>
-        </div>
-        <div class="modal-body">
-         
-             <form>
-                  <div class="form-group" >
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="text" class="form-control" ng-model="Email" id="exampleInputEmail1" placeholder="{{Email}}" >
-                  </div>
-                        <div class="form-group">
-                          <label for="exampleInputPassword1">Password</label>
-                          
-                           
-                          <input type="password" class="form-control" ng-model="Password" id="exampleInputPassword1" placeholder="{{Password}}">
-                        </div>
-                           <div class="form-group" >
-                            <label for="exampleInputEmail1">First Name</label>
-                            <input type="text" class="form-control" ng-model="Fname" id="exampleInputEmail1" placeholder="{{Fname}}" >
-                          </div>
-                              <div class="form-group">
-                                <label for="exampleInputPassword1">Last Name</label>
-                               
-                                 
-                                <input type="text" class="form-control" ng-model="Lname" id="exampleInputPassword1" placeholder="{{Lname}}">
-                              </div>
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Updating Profile</h4>
+              </div>
+              <div class="modal-body">
+               
+                        <form>
+                               <div class="form-group" >
+                                  <label for="exampleInputEmail1">First Name</label>
+                                  <input type="text" class="form-control" ng-model="Fname" id="exampleInputEmail1" value="<%= user.fname %>">
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleInputPassword1">Last Name</label>                                 
+                                  <input type="text" class="form-control" ng-model="Lname" id="exampleInputPassword1" value="<%= user.lname %>">
+                                </div>
                                  <div class="form-group" >
-                                   <label for="exampleInputEmail1">Employee Number</label>
-                                   <input type="text" class="form-control" ng-model="Enum" id="exampleInputEmail1" placeholder="{{Enum}}" >
+                                   <label for="exampleInputEmail1">NIC Number</label>
+                                   <input type="text" class="form-control" ng-model="Enum" id="exampleInputEmail1" value="<%= user.nic %>" >
                                    </div>
                                     <div class="form-group">
                                       <label for="exampleInputPassword1">EPF Number</label>
-
-                                      <input type="text" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" placeholder="{{EPFnum}}">
+                                     <input type="text" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" value="<%= user.EPF %>">
                                     </div>
-                                        <div class="form-group" >
-                                            <label for="exampleInputEmail1">Companies</label>
-                                            <input type="text" class="form-control" ng-model="Companies" id="exampleInputEmail1" placeholder="{{Companies}}" >
-                                          </div>
-                                            <div class="form-group">
-                                              <label for="exampleInputPassword1">Birthday</label>
-                                             
-                                               
-                                              <input type="data" class="form-control" ng-model="Birthday" id="exampleInputPassword1" placeholder="{{Password}}">
-                                            </div>
+                                  <div class="form-group">
+                                      <label for="exampleInputPassword1">Birthday</label>    
+                                      <input type="data" class="form-control" ng-model="Birthday" id="exampleInputPassword1" value="<%= user.birthday %>">
+                                 </div>
+                                 <div class="form-group" >
+                                    <label for="comment">Address</label>
+                                    <input type="text" class="form-control" ng-model="Address" id="exampleInputEmail1" value="<%= user.address %>" >
+                                  </div>
+                                  <div class="form-group" >
+                                    <label for="comment">Designation</label>
+                                    <input type="text" class="form-control" ng-model="Designetion" id="exampleInputEmail1" value="<%= user.designation %>" >
+                                  </div>
+                                   <div class="form-group">
+                                    <label >Department</label>
+                                      <form>
+                                      <div class="form-group">
+                                        <select class="form-control" id="sel2">
+                                          <option>Any</option>
+                                          <option>HR</option>
+                                          <option>Manegment</option>
+                                          <option>Oparetion</option>
+                                        </select>
+                                      </div>
+                                    </form>
+                                    </div>
+                                    <div class="form-group">
+                                    ​<label for="comment">Description</label>
+                                    <textarea class="form-control" rows="5" id="comment"> <%= user.description %></textarea>
+                                  </div>
+                          
+                        
+                        
+                       </form> 
+                        </div>
+                        <div class="modal-footer">
+                          <form>
+                            <!-- Trigger the modal with a button -->
+                             <button type="submit" class="btn btn-default btn pull-left ">Submit</button>
+                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      
+                    </div>
 
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  <!-- Trigger the modal with a button -->
-                 </form>
-            
-         
-        </div>
-        <div class="modal-footer">
 
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
 
-  <!--------------------------------------------------------------------------------------------------------------------- -->
+<!-- -->
+
 </div>
+</div>
+</div>
+</div>
+<br/>
+
+<%- include footer.ejs %>
+
 </body>
+
 </html>

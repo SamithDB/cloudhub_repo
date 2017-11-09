@@ -27,7 +27,7 @@ module.exports = function(app, passport) {
 
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/home', // redirect to the secure home section
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
 		}),
@@ -54,7 +54,7 @@ module.exports = function(app, passport) {
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
 		
-		successRedirect : '/profile', // redirect to the secure profile section
+		successRedirect : '/home', // redirect to the secure home section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 
@@ -79,7 +79,43 @@ module.exports = function(app, passport) {
 
 		
 	});
+
+	// =====================================
+	// Home SECTION =========================
+	// =====================================
+
+	app.get('/home', function(req, res) {
+						connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+
+                    res.render('home.ejs', {
+						user : rows[0] //  pass to template
+					});
+
+        		});
+			});
 	
+
+	// =====================================
+	// Posting news =========================
+	// =====================================
+
+	app.post('/posting', function(req, postnews, res) {
+
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);
+
+                    console.log(req.user.idlogin);
+					console.log(req.body.postnews);
+					console.log(req.body.postnews);
+					console.log(req.body.postnews);
+
+                    
+        		});
+			});
+
 	// =====================================
 	// LOGOUT ==============================
 	// =====================================
@@ -100,7 +136,7 @@ module.exports = function(app, passport) {
     app.get('/auth/google/callback',
             passport.authenticate('google', {
                     failureFlash : true,
-					successRedirect : '/profile',
+					successRedirect : '/home',
                     failureRedirect : '/signup'
 					
             }));

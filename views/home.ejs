@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+
+    <title> Home </title>
+
+
+    <link href="/cssFiles/css" rel="stylesheet" type="text/css">
+    <link href="/cssFiles/toolkit.css" rel="stylesheet">
+  <link href="./application.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
+
+    <style>
+      body {
+        width: 1px;
+        min-width: 100%;
+        *width: 100%;
+        background-color: #ECEFF1;
+        padding-bottom:60px;  
+      }
+
+      footer {
+        background-color: #546E7A ;
+        color: white;
+        padding: 15px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: white;
+        display: inline;
+      }
+
+  </style>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
+    </script>
+    
+</head>
+
+
+<body >
+ <div class="container">
+<!--customer deteis and 1st grid--------------------> 
+
+</br>
+</br>
+
+    <div class="row-md-*">
+     <div class="col-md-3" >
+        <div class="mu sh sp abk">
+            <div class="mv">
+             <div class="mu blf abk">
+            <div class="na" style="background-image: url(assets/img/iceland.jpg);"></div>
+            <div class="mv arx">
+                <img class="blg" src="/cssFiles/profile_pic.png" >
+                             
+              <h6 class="mw">
+                <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
+              </h6>
+
+              <p class="abk"><%= user.description %></p>
+
+              <ul class="blh">
+                <li class="bli">
+                  <a href="" class="bjx" data-toggle="modal">
+                  Profile
+                  <h6 class="aal"><a href="/profile" class="btn btn-default">Go to</a></h6>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>          
+        </div>
+
+          <div class="mu sh sp abk">
+            <div class="mv">
+              <h6 class="abd">About </h6>
+              <ul class="dc atd">
+                <li><span class="asz h awk abc"></span>Position <label class="control-label" style="color: #336666"><%= user.designation %></label>
+                </li><li><span class="asz h bbn abc"></span>Department <label class="control-label" style="color: #336666"><%= user.designation %></label>
+              </li></ul>
+            </div>
+          </div>      
+        </div>
+    </div>
+
+<!--customer details and 1st grid end point--------------------> 
+
+   <!-- add, post details and 2nd grid--------------------> 
+        <div class="col-md-5">
+
+             <div class="mu sh sp abk">
+              <div class="mv">
+                <div class="row-md-1">
+                  <img class="newblg" src="/cssFiles/profile_pic.png" >
+
+               <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
+               
+             
+                </div>
+                <div class="row-md-5">                    
+                 <form action="/posting" role="form"  method="post">
+
+                    <div class="form-group">
+                          <input class="form-control" rows="3" name="postnews" placeholder="Type Here"></input>
+                    </div>
+                    <div class="row">      
+                    <div class="col-md-1 col-sm-2"><a href="#" data-toggle="tooltip" title="Link"><span class="glyphicon glyphicon-link pull-left"></span></a></div>
+                    <div class="col-md-1 col-sm-2" align="left"> <a href="#" data-toggle="tooltip" title="File"><span class="glyphicon glyphicon-folder-open"></span></a></div>              
+                    <div class="col-md-10 col-sm-5" align="right">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
+                    </div>
+
+                  </form>
+               </div>
+              </div>
+            </div>
+
+               <!--grid updating point--------------------> 
+            
+                  <div class="mu sh sp abk">
+                     <div class="mv">
+                  
+                    </div>
+                 </div>
+        </div>
+<div class="col-md-4" " >
+  <!-- about sugetion person--> 
+  <div class="row">
+   <div class="mu sh sp abk">
+      <div class="mv">
+        <label class="control-label" style="color: #336666">Announcements</label>
+        <ul class="dc atd">
+          <li><span class="asz h awk abc"></span>Announcement 1 <a href=""></a>
+          </li>
+          <li><span class="asz h bbn abc"></span>Announcement 2 <a href=""></a>
+          </li>
+          <li><span class="asz h bcw abc"></span>Announcement 3 <a href=""></a>
+          </li>
+          <li><span class="asz h bax abc"></span>Announcement 4<a href=""></a>
+          </li>
+        </ul>
+      </div>
+    </div>  
+  </div>
+  <!-- calender eka change -->
+  
+    <div class="mu sh sp abk">
+        <div class="mv">
+            <div class="embed-responsive embed-responsive-4by3">
+              <center>
+           <iframe class="embed-responsive-item" src="https://calendar.google.com/calendar/embed?src=cloudpartners.biz_mmfv7u05m6dpnrf2k1dcoe4kpg%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0"  frameborder="0" scrolling="no"></iframe></center>
+        </div>
+       </div>
+     </div>
+    <div class="mu sh sp abk">
+        <div class="mv">
+          <center>
+            <div class="embed-responsive embed-responsive-4by3">
+           <iframe src="https://calendar.google.com/calendar/embed?src=32sbb14ul1v9irvgu6nhd1gr14%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0" frameborder="0" scrolling="no"></iframe></center>
+        </div>
+      </div>
+   
+</div>
+
+<!--  data change pop up menu eka -->
+</div>
+</div>
+
+
+</div>  
+</div>
+
+
+    <script>
+      // execute/clear BS loaders for docs
+      $(function(){while(window.BS&&window.BS.loader&&window.BS.loader.length){(window.BS.loader.pop())()}})
+    </script>
+ 
+  
+</div>
+
+<%- include footer.ejs %>
+
+
+</body>
+</html>
