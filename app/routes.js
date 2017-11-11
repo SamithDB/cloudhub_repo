@@ -54,7 +54,7 @@ module.exports = function(app, passport) {
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
 		
-		successRedirect : '/home', // redirect to the secure home section
+		successRedirect : '/profile', // redirect to the secure home section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 
@@ -67,7 +67,7 @@ module.exports = function(app, passport) {
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/profile', isLoggedIn, function(req, res) {
 
-		 connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+		connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
                     if (err)
                          console.log(err);;
 
@@ -81,17 +81,53 @@ module.exports = function(app, passport) {
 	});
 
 	// =====================================
+	// =====================================
+	// EDIT USER POST ACTION
+
+	app.post('/updating', function(req, res, next) {
+
+		
+			connection.query('UPDATE employee SET fname = ?, lname = ?  WHERE login_idlogin = ?',[req.body.fname2, req.body.lname2, req.user.idlogin], function(err, result) {
+				//if(err) throw err
+				if (err) {
+					console.log(err);
+					
+					
+				} else {
+					console.log('Data updated successfully!');
+					res.redirect('/profile'); 
+					
+				}
+			})
+		
+
+	});
+
+
+
+
+
+	// =====================================
 	// Home SECTION =========================
 	// =====================================
 
 	app.get('/home', function(req, res) {
-						connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+
+
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ? ",[req.user.idlogin], function(err, rows) {
                     if (err)
                          console.log(err);;
 
-                    res.render('home.ejs', {
-						user : rows[0] //  pass to template
-					});
+                     		var query = connection.query('SELECT * FROM posts ORDER BY idposts DESC',function(err,post){
+			        		if(err)
+			        			console.log(err);;
+
+			        				res.render('home.ejs', {
+									user : rows[0],//  pass to template
+									data : post
+									});
+			        		});
+                    
 
         		});
 			});
@@ -101,20 +137,37 @@ module.exports = function(app, passport) {
 	// Posting news =========================
 	// =====================================
 
-	app.post('/posting', function(req, postnews, res) {
+	app.post('/posting', function(req, res) {
 
-					connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
-                    if (err)
-                         console.log(err);
+										connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+						                if (err)
+						                    console.log(err);
+						                    // if there is no user with that username
+						                    // create the user
+						                        var newPost = new Object();
+						                        newPost.when = "datetime";
+						                        newPost.post = req.body.postnews;
+						                        newPost.type = "text";
+						                        newPost.employee_idemployee = rows[0].idemployee;
+						                        
+						                        console.log("Connected!");
+						                        var insertQuery = "INSERT INTO posts (posts.post, posts.when, posts.type, posts.employee_idemployee ) values (?,?,?,?)";
+							                        connection.query(insertQuery,[ newPost.post, newPost.when,newPost.type,newPost.employee_idemployee],function(err, rows) {
+							                        if (err){
+							                        	console.log(err);;
+							                        }else{
+							                        	console.log("Posting Done");
+							                        }
 
-                    console.log(req.user.idlogin);
-					console.log(req.body.postnews);
-					console.log(req.body.postnews);
-					console.log(req.body.postnews);
+							                        
+						                    });
+							            res.redirect('/home'); 
+						            });
 
-                    
-        		});
 			});
+
+
+
 
 	// =====================================
 	// LOGOUT ==============================
@@ -123,6 +176,9 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
+
+
+
 
     // =====================================
     // GOOGLE ROUTES =======================
@@ -140,6 +196,8 @@ module.exports = function(app, passport) {
                     failureRedirect : '/signup'
 					
             }));
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Arhive
 				    
 					'use strict';

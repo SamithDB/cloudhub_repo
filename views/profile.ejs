@@ -22,22 +22,15 @@
 	  }
 	</script>
 
+
     <style>
       body {
         width: 1px;
         min-width: 100%;
         *width: 100%;
-      }
-        footer {
-        background-color: #546E7A ;
-        color: white;
-        padding: 15px;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        color: white;
-        display: inline;
+        background-color: #ECEFF1;
+        padding-bottom:60px;  
+        padding-top: 60px;
       }
 
     </style>
@@ -199,24 +192,24 @@
               </div>
               <div class="modal-body">
                
-                        <form>
+                        <form action="/updating" role="form"  method="post">
                                <div class="form-group" >
                                   <label for="exampleInputEmail1">First Name</label>
-                                  <input type="text" class="form-control" ng-model="Fname" id="exampleInputEmail1" value="<%= user.fname %>">
+                                  <input type="text" name="fname2" class="form-control" ng-model="Fname" id="exampleInputEmail1" value="<%= user.fname %>">
                                 </div>
                                 <div class="form-group">
                                   <label for="exampleInputPassword1">Last Name</label>                                 
-                                  <input type="text" class="form-control" ng-model="Lname" id="exampleInputPassword1" value="<%= user.lname %>">
+                                  <input type="text" name="lname2" class="form-control" ng-model="Lname" id="exampleInputPassword1" value="<%= user.lname %>">
                                 </div>
                                  <div class="form-group" >
                                    <label for="exampleInputEmail1">NIC Number</label>
                                    <input type="text" class="form-control" ng-model="Enum" id="exampleInputEmail1" value="<%= user.nic %>" >
-                                   </div>
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                       <label for="exampleInputPassword1">EPF Number</label>
                                      <input type="text" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" value="<%= user.EPF %>">
-                                    </div>
-                                  <div class="form-group">
+                                 </div>
+                                 <div class="form-group">
                                       <label for="exampleInputPassword1">Birthday</label>    
                                       <input type="data" class="form-control" ng-model="Birthday" id="exampleInputPassword1" value="<%= user.birthday %>">
                                  </div>
@@ -230,7 +223,7 @@
                                   </div>
                                    <div class="form-group">
                                     <label >Department</label>
-                                      <form>
+                                      
                                       <div class="form-group">
                                         <select class="form-control" id="sel2">
                                           <option>Any</option>
@@ -239,24 +232,24 @@
                                           <option>Oparetion</option>
                                         </select>
                                       </div>
-                                    </form>
-                                    </div>
-                                    <div class="form-group">
+                                    
+                                  </div>
+                                  <div class="form-group">
                                     ​<label for="comment">Description</label>
                                     <textarea class="form-control" rows="5" id="comment"> <%= user.description %></textarea>
                                   </div>
+                                  <div class="form-group">
+                                    <!-- Trigger the modal with a button -->
+                                    <input type="hidden" name="_method" value="put" />
+                                   <button type="submit" class="btn btn-default btn pull-left ">Submit</button>
+                                   <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
+                                    
+                                  </div>
                           
-                        
-                        
                        </form> 
                         </div>
-                        <div class="modal-footer">
-                          <form>
-                            <!-- Trigger the modal with a button -->
-                             <button type="submit" class="btn btn-default btn pull-left ">Submit</button>
-                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                          </form>
+                            
+                         
                         </div>
                       </div>
                       
@@ -272,7 +265,6 @@
 </div>
 <br/>
 
-<%- include footer.ejs %>
 
 </body>
 

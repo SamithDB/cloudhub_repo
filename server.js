@@ -12,6 +12,8 @@ var port     = process.env.PORT || 8080;
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+
+
 // configuration ===============================================================
 // connect to database
 
@@ -38,6 +40,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 
 // routes ======================================================================

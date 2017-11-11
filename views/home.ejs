@@ -15,13 +15,18 @@
 
     <link href="/cssFiles/css" rel="stylesheet" type="text/css">
     <link href="/cssFiles/toolkit.css" rel="stylesheet">
-  <link href="./application.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <link href="./application.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
 <script>
+  function foo() {
+                            var dbconfig = require('../config/database');
+                            var mysql = require('mysql');
+                            var connection = mysql.createConnection(dbconfig.connection);
+                        };
   function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
   }
@@ -32,20 +37,15 @@
         width: 1px;
         min-width: 100%;
         *width: 100%;
-        background-color: #ECEFF1;
-        padding-bottom:60px;  
+        background-color: #ECEFF1; 
+        padding-top: 60px;
       }
 
-      footer {
-        background-color: #546E7A ;
-        color: white;
-        padding: 15px;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        color: white;
-        display: inline;
+      .wrap {
+      flex: 1;
+      height: 200vh;
+      overflow-y: scroll;
+      
       }
 
   </style>
@@ -53,17 +53,29 @@
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();   
         });
+
+            
     </script>
+
+   
     
 </head>
 
 
-<body >
+
+
  <div class="container">
+
+  <body onload="javascript:foo()">
+      <div class="bs-example">
+          <%- include header.ejs %>
+      </div>
+
+      </br>
+      </br>
+
 <!--customer deteis and 1st grid--------------------> 
 
-</br>
-</br>
 
     <div class="row-md-*">
      <div class="col-md-3" >
@@ -113,16 +125,14 @@
               <div class="mv">
                 <div class="row-md-1">
                   <img class="newblg" src="/cssFiles/profile_pic.png" >
-
-               <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
-               
+                   <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
              
                 </div>
                 <div class="row-md-5">                    
                  <form action="/posting" role="form"  method="post">
 
                     <div class="form-group">
-                          <input class="form-control" rows="3" name="postnews" placeholder="Type Here"></input>
+                          <textarea class="form-control" rows="3" name="postnews" placeholder="Type Here"></textarea>
                     </div>
                     <div class="row">      
                     <div class="col-md-1 col-sm-2"><a href="#" data-toggle="tooltip" title="Link"><span class="glyphicon glyphicon-link pull-left"></span></a></div>
@@ -135,13 +145,55 @@
               </div>
             </div>
 
-               <!--grid updating point--------------------> 
-            
-                  <div class="mu sh sp abk">
-                     <div class="mv">
-                  
+
+               <!--grid list posts--------------------> 
+              <div class="wrap">
+                  <div class="mu sh sp abk"  >
+                     <div class="pannel">
+
+                        
+                        <% 
+                        
+                          
+                          
+                          
+
+
+                          if(data.length){ 
+                          for(var i = 0;i < data.length;i++) { 
+                          connection.query("SELECT * FROM employee WHERE idemployee = ?",[data[i].employee_idemployee], function(err, rows) {
+                          if (err)
+                            console.log(err);;
+                          %>
+                        
+                          <div class="mv ">
+                            <img class="newblg" src="/cssFiles/profile_pic.png" >
+                            <label class="control-label" style="color: #336666"><%=rows[0].fname%></label>
+                          </div>
+                        
+                        
+                          <div class="mv">
+                            <label><%=data[i].post%></label>
+                          </div>
+                       
+                        
+                          <div class="mv "> : <%=data[i].when%></div>
+                       
+                        <hr/>
+                        <% 
+                        });
+                      }
+                        }else{ %>
+                       
+                          <td colspan="3">No posts</td>
+                        
+                      <% 
+                    }
+                       %>
+
                     </div>
                  </div>
+             </div>
         </div>
 <div class="col-md-4" " >
   <!-- about sugetion person--> 
@@ -150,13 +202,13 @@
       <div class="mv">
         <label class="control-label" style="color: #336666">Announcements</label>
         <ul class="dc atd">
-          <li><span class="asz h awk abc"></span>Announcement 1 <a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 1 <a href=""></a>
           </li>
-          <li><span class="asz h bbn abc"></span>Announcement 2 <a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 2 <a href=""></a>
           </li>
-          <li><span class="asz h bcw abc"></span>Announcement 3 <a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 3 <a href=""></a>
           </li>
-          <li><span class="asz h bax abc"></span>Announcement 4<a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 4<a href=""></a>
           </li>
         </ul>
       </div>
@@ -187,19 +239,12 @@
 </div>
 
 
-</div>  
-</div>
-
-
     <script>
       // execute/clear BS loaders for docs
       $(function(){while(window.BS&&window.BS.loader&&window.BS.loader.length){(window.BS.loader.pop())()}})
     </script>
  
-  
-</div>
-
-<%- include footer.ejs %>
+ 
 
 
 </body>

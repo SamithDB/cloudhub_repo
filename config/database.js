@@ -5,6 +5,6 @@ module.exports = {
         'user': 'root',
         'password': 'admin123'
     },
-	'database': 'employeesdb2',
+	'database': 'EmployeePortal_DB',
     'users_table': 'login'
 };

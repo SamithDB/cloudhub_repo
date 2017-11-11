@@ -64,7 +64,7 @@ module.exports = function(passport) {
                 } else if(password == req.body.password2){
                     // if there is no user with that username
                     // create the user
-                    var newUserMysql = new Object();
+                        var newUserMysql = new Object();
                         newUserMysql.username = username;
                         newUserMysql.password = bcrypt.hashSync(password, null, null);  // use the generateHash function in our user model
                         

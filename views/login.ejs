@@ -11,8 +11,18 @@
     <link href="/cssFiles/application.css" rel="stylesheet">
 
     <style>
-		body 		{ padding-top:80px; }
-	</style>
+      body {
+        width: 1px;
+        min-width: 100%;
+        *width: 100%;
+        background-color: #ECEFF1;
+        padding-top: 200px;
+        padding-bottom: : 0px;
+      }
+      
+
+    </style>
+    
 </head>
 <body>
 
@@ -39,9 +49,6 @@
                     <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span></a>
                   </div>
 
-                  <footer class="bmx">
-                    <a href="#" class="asz">Forgot password</a>
-                  </footer>
               </form>
 
             <hr>
@@ -54,7 +61,11 @@
             <p>Need an account? <a href="/signup">Signup</a></p>
             <p>Or go <a href="/">home</a>.</p>
         </div>
+
+        
+
     </div>
+    <%- include footer.ejs %>
 
     <script>
 
