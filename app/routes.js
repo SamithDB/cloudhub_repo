@@ -114,18 +114,26 @@ module.exports = function(app, passport) {
 	app.get('/home', function(req, res) {
 
 
-					connection.query("SELECT * FROM employee WHERE login_idlogin = ? ",[req.user.idlogin], function(err, rows) {
-                    if (err)
-                         console.log(err);;
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ? ",[req.user.idlogin], function(err1, rows) {
+                    if (err1)
+                         console.log(err1);;
 
-                     		var query = connection.query('SELECT * FROM posts ORDER BY idposts DESC',function(err,post){
-			        		if(err)
-			        			console.log(err);;
+                     		var query = connection.query('SELECT * FROM posts ORDER BY idposts DESC',function(err2,post){
+			        		if(err2)
+			        			console.log(err2);;
+
+			        			var query = connection.query('SELECT * FROM employee',function(err3,rowlist){
+				        		if(err3)
+				        			console.log(err3);;
 
 			        				res.render('home.ejs', {
-									user : rows[0],//  pass to template
+									employeelist : rowlist,
+									user : rows[0],							//  pass to template
 									data : post
+									
 									});
+
+			        			});
 			        		});
                     
 
@@ -149,10 +157,11 @@ module.exports = function(app, passport) {
 						                        newPost.post = req.body.postnews;
 						                        newPost.type = "text";
 						                        newPost.employee_idemployee = rows[0].idemployee;
+						                        newPost.department_iddepartment = req.body.depid;
 						                        
 						                        console.log("Connected!");
-						                        var insertQuery = "INSERT INTO posts (posts.post, posts.when, posts.type, posts.employee_idemployee ) values (?,?,?,?)";
-							                        connection.query(insertQuery,[ newPost.post, newPost.when,newPost.type,newPost.employee_idemployee],function(err, rows) {
+						                        var insertQuery = "INSERT INTO posts (posts.post, posts.when, posts.type, posts.employee_idemployee,posts.department_iddepartment) values (?,?,?,?,?)";
+							                        connection.query(insertQuery,[ newPost.post, newPost.when,newPost.type,newPost.employee_idemployee,newPost.department_iddepartment],function(err, rows) {
 							                        if (err){
 							                        	console.log(err);;
 							                        }else{
@@ -167,7 +176,14 @@ module.exports = function(app, passport) {
 			});
 
 
+	// =====================================
+	// Dashboard ===========================
+	// =====================================
+	app.get('/dash', function(req, res) {
+		res.render('dashboard.ejs', {
+			});
 
+	});
 
 	// =====================================
 	// LOGOUT ==============================

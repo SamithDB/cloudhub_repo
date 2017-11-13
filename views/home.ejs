@@ -22,11 +22,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
 <script>
-  function foo() {
-                            var dbconfig = require('../config/database');
-                            var mysql = require('mysql');
-                            var connection = mysql.createConnection(dbconfig.connection);
-                        };
   function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
   }
@@ -66,7 +61,7 @@
 
  <div class="container">
 
-  <body onload="javascript:foo()">
+  <body>
       <div class="bs-example">
           <%- include header.ejs %>
       </div>
@@ -134,6 +129,9 @@
                     <div class="form-group">
                           <textarea class="form-control" rows="3" name="postnews" placeholder="Type Here"></textarea>
                     </div>
+                    <div>
+                      <input name="depid" type="hidden" value= <%=user.department_iddepartment %> >
+                    </div>
                     <div class="row">      
                     <div class="col-md-1 col-sm-2"><a href="#" data-toggle="tooltip" title="Link"><span class="glyphicon glyphicon-link pull-left"></span></a></div>
                     <div class="col-md-1 col-sm-2" align="left"> <a href="#" data-toggle="tooltip" title="File"><span class="glyphicon glyphicon-folder-open"></span></a></div>              
@@ -154,21 +152,24 @@
                         
                         <% 
                         
-                          
-                          
-                          
-
-
                           if(data.length){ 
                           for(var i = 0;i < data.length;i++) { 
-                          connection.query("SELECT * FROM employee WHERE idemployee = ?",[data[i].employee_idemployee], function(err, rows) {
-                          if (err)
-                            console.log(err);;
+
                           %>
                         
                           <div class="mv ">
                             <img class="newblg" src="/cssFiles/profile_pic.png" >
-                            <label class="control-label" style="color: #336666"><%=rows[0].fname%></label>
+                            <label class="control-label" style="color: #336666">
+                              <%
+                              for(var j = 0;j < employeelist.length;j++) {
+                                if(data[i].employee_idemployee==employeelist[j].idemployee){
+                              %>
+                                <%=employeelist[j].fname%> <%=employeelist[j].lname%>
+                              <%
+                                }
+                              }
+                              %>
+                            </label>
                           </div>
                         
                         
@@ -177,11 +178,19 @@
                           </div>
                        
                         
-                          <div class="mv "> : <%=data[i].when%></div>
+                          <div class="mv "> : <%=data[i].when%>
+                            <%
+                            if(data[i].employee_idemployee==user.idemployee){
+                              %>
+                                <a href="/delpost"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                              <%
+                            }
+                            %>
+                          </div>
                        
                         <hr/>
                         <% 
-                        });
+                        
                       }
                         }else{ %>
                        
