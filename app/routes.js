@@ -135,9 +135,8 @@ module.exports = function(app, passport) {
 
 			        			});
 			        		});
-                    
-
-        		});
+                   
+        			});
 			});
 	
 
@@ -153,7 +152,7 @@ module.exports = function(app, passport) {
 						                    // if there is no user with that username
 						                    // create the user
 						                        var newPost = new Object();
-						                        newPost.when = "datetime";
+						                        newPost.when = req.body.datetime;
 						                        newPost.post = req.body.postnews;
 						                        newPost.type = "text";
 						                        newPost.employee_idemployee = rows[0].idemployee;
@@ -180,8 +179,26 @@ module.exports = function(app, passport) {
 	// Dashboard ===========================
 	// =====================================
 	app.get('/dash', function(req, res) {
-		res.render('dashboard.ejs', {
-			});
+		
+
+		connection.query("SELECT * FROM employee WHERE login_idlogin = ? ",[req.user.idlogin], function(err1, rows) {
+                    if (err1)
+                         console.log(err1);;
+
+			        			var query = connection.query('SELECT * FROM employee',function(err3,rowlist){
+				        		if(err3)
+				        			console.log(err3);;
+
+			        				res.render('dashboard.ejs', {
+									employeelist : rowlist,
+									user : rows[0],		//  pass to template
+								
+									});
+
+			        			});
+                   
+        	});
+
 
 	});
 
