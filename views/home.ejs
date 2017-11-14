@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" ng-app>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
     <meta charset="utf-8">
 
     <title> Home </title>
@@ -51,7 +47,7 @@
 
             
     </script>
-
+  
    
     
 </head>
@@ -77,9 +73,9 @@
         <div class="mu sh sp abk">
             <div class="mv">
              <div class="mu blf abk">
-            <div class="na" style="background-image: url(assets/img/iceland.jpg);"></div>
+            <div class="na" ></div>
             <div class="mv arx">
-                <img class="blg" src="/cssFiles/profile_pic.png" >
+                <img class="blg" src=<%=user.image %> >
                              
               <h6 class="mw">
                 <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
@@ -103,8 +99,8 @@
             <div class="mv">
               <h6 class="abd">About </h6>
               <ul class="dc atd">
-                <li><span class="asz h awk abc"></span>Position <label class="control-label" style="color: #336666"><%= user.designation %></label>
-                </li><li><span class="asz h bbn abc"></span>Department <label class="control-label" style="color: #336666"><%= user.designation %></label>
+                <li><span class="glyphicon glyphicon-user"></span> Position <label class="control-label" style="color: #336666"><%= user.designation %></label>
+                </li><li><span class="glyphicon glyphicon-phone"></span> Contact Number <label style="color: #336666"><%= user.contact %></label>
               </li></ul>
             </div>
           </div>      
@@ -119,7 +115,7 @@
              <div class="mu sh sp abk">
               <div class="mv">
                 <div class="row-md-1">
-                  <img class="newblg" src="/cssFiles/profile_pic.png" >
+                  <img class="newblg" src=<%=user.image %> >
                    <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
              
                 </div>
@@ -130,11 +126,17 @@
                           <textarea class="form-control" rows="3" name="postnews" placeholder="Type Here"></textarea>
                     </div>
                     <div>
-                      <input name="datetime" type="hidden" value=<%=Date("October 13, 2014 11:13:00") %> >
+                      <%
+                        var now = new Date(); 
+                        var datetime = now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate(); 
+                        datetime += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); 
+                        %>
+                      <input name="datetime" type="hidden" value= <%=datetime %> >
                       <input name="depid" type="hidden" value= <%=user.department_iddepartment %> >
+                      <input name="msgtype" type="hidden" value="text" >
                     </div>
                     <div class="row">      
-                    <div class="col-md-1 col-sm-2"><a href="#" data-toggle="tooltip" title="Link" ><span class="glyphicon glyphicon-link pull-left"></span></a></div>
+                    <div class="col-md-1 col-sm-2"><a href="#"  title="Link" data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-link pull-left"></span></a></div>
                     <div class="col-md-1 col-sm-2" align="left"> <a href="#" data-toggle="tooltip" title="File"><span class="glyphicon glyphicon-folder-open"></span></a></div>              
                     <div class="col-md-10 col-sm-5" align="right">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
                     </div>
@@ -159,7 +161,20 @@
                           %>
                         
                           <div class="mv ">
-                            <img class="newblg" src="/cssFiles/profile_pic.png" >
+
+
+
+                            <img class="newblg" src=<%
+                              for(var j = 0;j < employeelist.length;j++) {
+                                if(data[i].employee_idemployee==employeelist[j].idemployee){
+                              %>
+                                <%=employeelist[j].image%> 
+                              <%
+                                }
+                              }
+                              %> >
+
+
                             <label class="control-label" style="color: #336666">
                               <%
                               for(var j = 0;j < employeelist.length;j++) {
@@ -178,18 +193,32 @@
                             <%if(data[i].type=="text"){%>
                             <label><%=data[i].post%></label>
                             <% }else if(data[i].type=="url"){%>
-                            <a href="<%=data[i].post%>"><%=data[i].post%></a>
+                            <a href="<%=data[i].post%>" target="_blank"><%=data[i].post%></a>
                             <% }else {%>
                             <label><%=data[i].post%></label>
                             <% }%>
                           </div>
                        
                         
-                          <div class="mv "> : <%=data[i].when%> <br/><br/>
+                          <div class="mv ">  <%=data[i].when%> <br/><br/>
                             <%
                             if(data[i].employee_idemployee==user.idemployee){
                               %>
-                                <a href="/delpost"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                                <form action="/delpost" method="post">
+                                  <div class="form-group">
+                                  <input name="delid" type="hidden" value= <%=data[i].idposts %> >
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="buttons">
+
+                                  <button type="submit" class="glyphicon glyphicon-trash" style="background:none!important;
+    border:none; 
+    padding:0!important;
+    /*border is optional*/
+    border-bottom:1px solid #444; ">Delete</button>
+                                </div>
+                                  </div>
+                                </form>
                               <%
                             }
                             %>
@@ -213,7 +242,7 @@
              </div>
         </div>
 <div class="col-md-4" " >
-  <!-- about sugetion person--> 
+  <!-- Announcements--> 
   <div class="row">
    <div class="mu sh sp abk">
       <div class="mv">
@@ -260,72 +289,39 @@
 
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"></button>
-                <h4 class="modal-title">Updating Profile</h4>
+                <h4 class="modal-title">Sharing URLs</h4>
               </div>
               <div class="modal-body">
                
-                        <form action="/updating" role="form"  method="post">
-                               <div class="form-group" >
-                                  <label for="exampleInputEmail1">First Name</label>
-                                  <input type="text" name="fname2" class="form-control" ng-model="Fname" id="exampleInputEmail1" value="<%= user.fname %>">
-                                </div>
-                                <div class="form-group">
-                                  <label for="exampleInputPassword1">Last Name</label>                                 
-                                  <input type="text" name="lname2" class="form-control" ng-model="Lname" id="exampleInputPassword1" value="<%= user.lname %>">
-                                </div>
-                                 <div class="form-group" >
-                                   <label for="exampleInputEmail1">NIC Number</label>
-                                   <input type="text" class="form-control" ng-model="Enum" id="exampleInputEmail1" value="<%= user.nic %>" >
-                                </div>
-                                <div class="form-group">
-                                      <label for="exampleInputPassword1">EPF Number</label>
-                                     <input type="text" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" value="<%= user.EPF %>">
-                                 </div>
-                                 <div class="form-group">
-                                      <label for="exampleInputPassword1">Birthday</label>    
-                                      <input type="data" class="form-control" ng-model="Birthday" id="exampleInputPassword1" value="<%= user.birthday %>">
-                                 </div>
-                                 <div class="form-group" >
-                                    <label for="comment">Address</label>
-                                    <input type="text" class="form-control" ng-model="Address" id="exampleInputEmail1" value="<%= user.address %>" >
-                                  </div>
-                                  <div class="form-group" >
-                                    <label for="comment">Designation</label>
-                                    <input type="text" class="form-control" ng-model="Designetion" id="exampleInputEmail1" value="<%= user.designation %>" >
-                                  </div>
-                                   <div class="form-group">
-                                    <label >Department</label>
-                                      
-                                      <div class="form-group">
-                                        <select class="form-control" id="sel2">
-                                          <option>Any</option>
-                                          <option>HR</option>
-                                          <option>Manegment</option>
-                                          <option>Oparetion</option>
-                                        </select>
-                                      </div>
-                                    
-                                  </div>
-                                  <div class="form-group">
-                                    ​<label for="comment">Description</label>
-                                    <textarea class="form-control" rows="5" id="comment"> <%= user.description %></textarea>
-                                  </div>
-                                  <div class="form-group">
-                                    <!-- Trigger the modal with a button -->
-                                    <input type="hidden" name="_method" value="put" />
-                                   <button type="submit" class="btn btn-default btn pull-left ">Submit</button>
-                                   <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
-                                    
-                                  </div>
-                          
-                       </form> 
-                        </div>
+                    <form action="/posting" role="form"  method="post">
+
+                    <div class="form-group">
+                          <textarea class="form-control" rows="3" name="postnews" placeholder="Past URL here"></textarea>
+                    </div>
+                    <div>
+                      <%
+                        var now = new Date(); 
+                        var datetime = now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate(); 
+                        datetime += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); 
+                        %>
+                      <input name="datetime" type="hidden" value= <%=datetime %> >
+                      <input name="depid" type="hidden" value= <%=user.department_iddepartment %> >
+                      <input name="msgtype" type="hidden" value="url" >
+                    </div>
+                    <div class="row">              
+                    <div class="col-md-10 col-sm-5" align="left">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
+                    <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
+                    </div>
+
+                    </form>
+                         
+              </div>
                             
                          
-                        </div>
-                      </div>
+             </div>
+          </div>
                       
-                    </div>
+        </div>
 
 
 

@@ -6,6 +6,7 @@ module.exports = function(app, passport) {
 	var mysql = require('mysql');
 	var connection = mysql.createConnection(dbconfig.connection);
 	var cookieParser = require('cookie-parser');
+	const fileUpload = require('express-fileupload');
 		
 	connection.query('USE ' + dbconfig.database);
 	// =====================================
@@ -87,8 +88,7 @@ module.exports = function(app, passport) {
 	app.post('/updating', function(req, res, next) {
 
 		
-			connection.query('UPDATE employee SET fname = ?, lname = ?  WHERE login_idlogin = ?',[req.body.fname2, req.body.lname2, req.user.idlogin], function(err, result) {
-				//if(err) throw err
+			connection.query('UPDATE employee SET fname = ?, lname = ?, EPF = ?, nic = ?, birthday = ?, address= ?, contact = ?, designation = ?, description = ?  WHERE login_idlogin = ?',[req.body.fname2, req.body.lname2, req.body.epf2, req.body.nic2, req.body.birthday2, req.body.address2, req.body.contact2, req.body.designation2, req.body.description2, req.user.idlogin], function(err, result) {
 				if (err) {
 					console.log(err);
 					
@@ -103,6 +103,42 @@ module.exports = function(app, passport) {
 
 	});
 
+
+	// =====================================
+	// =====================================
+	// UPLOAD PROFILE PIC
+
+	app.use(fileUpload());
+
+	app.post('/profilepic', function(req, res) {
+
+		  if (!req.files)
+		    res.redirect('/profile'); 
+		 
+		  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+		  let sampleFile = req.files.sampleFile;
+		 
+		  // Use the mv() method to place the file somewhere on your server
+		  sampleFile.mv('propics/'+req.user.idlogin+'propic.jpg', function(err) {
+		    if (err){
+		      return res.status(500).send(err);
+		    }else{
+		    	connection.query('UPDATE employee SET image = ? WHERE login_idlogin = ?',['pics/'+req.user.idlogin+'propic.jpg', req.user.idlogin], function(err, result) {
+				if (err) 
+					console.log(err);
+
+				console.log('pic uploaded!');
+				res.redirect('/profile'); 
+
+				});
+
+
+		    }
+		 
+		    
+		  });
+
+		});
 
 
 
@@ -154,7 +190,7 @@ module.exports = function(app, passport) {
 						                        var newPost = new Object();
 						                        newPost.when = req.body.datetime;
 						                        newPost.post = req.body.postnews;
-						                        newPost.type = "text";
+						                        newPost.type = req.body.msgtype;
 						                        newPost.employee_idemployee = rows[0].idemployee;
 						                        newPost.department_iddepartment = req.body.depid;
 						                        
@@ -170,6 +206,26 @@ module.exports = function(app, passport) {
 							                        
 						                    });
 							            res.redirect('/home'); 
+						            });
+
+			});
+
+
+
+	// =====================================
+	// del post news =========================
+	// =====================================
+
+	app.post('/delpost', function(req, res) {
+
+										connection.query("DELETE FROM posts WHERE idposts = ?",[req.body.delid], function(err, rows) {
+						                if (err)
+						                    console.log(err);
+
+						                console.log("Post deleted");
+						                res.redirect('/home'); 
+						                    
+						                        
 						            });
 
 			});
@@ -232,7 +288,7 @@ module.exports = function(app, passport) {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Arhive
-				    
+	/*			    
 					'use strict';
 
 					const process = require('process'); // Required to mock environment variables
@@ -293,7 +349,7 @@ module.exports = function(app, passport) {
 					});
 					// [END process]
 
-
+*/
 	
 }
 

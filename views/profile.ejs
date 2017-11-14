@@ -3,8 +3,9 @@
 <html lang="en" >
 <head>
 	<title>Profile</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -59,10 +60,10 @@
     	<div class="mu sh sp abk">
         <div class="mv">
         <div class="mu blf abk">
-        <div class="na" style="background-image: url(assets/img/iceland.jpg);"></div>
+        <div class="na"></div>
         <div class="mv arx">
           <a >
-            <img class="blg" src="/cssFiles/profile_pic.png">
+            <img class="blg" src=<%=user.image %> >
           </a>
 
           <h6 class="mw">
@@ -82,7 +83,7 @@
             <li class="bli">
               <a href="" class="bjx" data-toggle="modal">
                 Change
-                <h6 class="aal"><a href="" class="btn btn-default">Link</a></h6>
+                <h6 class="aal"><a href="" class="btn btn-default" data-toggle="modal" data-target="#myupload">Link</a></h6>
               </a>
             </li>
           </ul>
@@ -93,10 +94,10 @@
 
       <div class="mu sh sp abk">
         <div class="mv">
-          <h6 class="abd">About <small>· <a href="">Edit</a></small></h6>
+          <h6 class="abd">About </h6>
           <ul class="dc atd">
-            <li><span class="asz h awk abc"></span>Position <label style="color: #336666"><%= user.designation %></label>
-            </li><li><span class="asz h bbn abc"></span>Contact Number <label style="color: #336666"><%= user.contact %></label>
+            <li><span class="glyphicon glyphicon-user"></span> Position <label style="color: #336666"><%= user.designation %></label>
+            </li><li><span class="glyphicon glyphicon-phone"></span> Contact Number <label style="color: #336666"><%= user.contact %></label>
             </li></ul>
         </div>
       </div>
@@ -203,40 +204,31 @@
                                 </div>
                                  <div class="form-group" >
                                    <label for="exampleInputEmail1">NIC Number</label>
-                                   <input type="text" class="form-control" ng-model="Enum" id="exampleInputEmail1" value="<%= user.nic %>" >
+                                   <input type="text" name="nic2" class="form-control" ng-model="Enum" id="exampleInputEmail1" value="<%= user.nic %>" >
                                 </div>
                                 <div class="form-group">
                                       <label for="exampleInputPassword1">EPF Number</label>
-                                     <input type="text" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" value="<%= user.EPF %>">
+                                     <input type="text" name="epf2" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" value="<%= user.EPF %>">
                                  </div>
                                  <div class="form-group">
                                       <label for="exampleInputPassword1">Birthday</label>    
-                                      <input type="data" class="form-control" ng-model="Birthday" id="exampleInputPassword1" value="<%= user.birthday %>">
+                                      <input type="data" name="birthday2" class="form-control" ng-model="Birthday" id="exampleInputPassword1" value="<%= user.birthday %>">
                                  </div>
                                  <div class="form-group" >
+                                    <label for="comment">Contact Number</label>
+                                    <input type="text" name="contact2" class="form-control" ng-model="Address" id="exampleInputEmail1" value="<%= user.contact %>" >
+                                </div>
+                                 <div class="form-group" >
                                     <label for="comment">Address</label>
-                                    <input type="text" class="form-control" ng-model="Address" id="exampleInputEmail1" value="<%= user.address %>" >
+                                    <input type="text" name="address2" class="form-control" ng-model="Address" id="exampleInputEmail1" value="<%= user.address %>" >
                                   </div>
                                   <div class="form-group" >
                                     <label for="comment">Designation</label>
-                                    <input type="text" class="form-control" ng-model="Designetion" id="exampleInputEmail1" value="<%= user.designation %>" >
-                                  </div>
-                                   <div class="form-group">
-                                    <label >Department</label>
-                                      
-                                      <div class="form-group">
-                                        <select class="form-control" id="sel2">
-                                          <option>Any</option>
-                                          <option>HR</option>
-                                          <option>Manegment</option>
-                                          <option>Oparetion</option>
-                                        </select>
-                                      </div>
-                                    
+                                    <input type="text" name="designation2" class="form-control" ng-model="Designetion" id="exampleInputEmail1" value="<%= user.designation %>" >
                                   </div>
                                   <div class="form-group">
-                                    ​<label for="comment">Description</label>
-                                    <textarea class="form-control" rows="5" id="comment"> <%= user.description %></textarea>
+                                    ​<label for="comment" >Description</label>
+                                    <textarea name="description2" class="form-control" rows="5" id="comment"> <%= user.description %></textarea>
                                   </div>
                                   <div class="form-group">
                                     <!-- Trigger the modal with a button -->
@@ -258,6 +250,43 @@
 
 
 <!-- -->
+
+
+
+    <!--  upload pop up menu  -->
+<div class="modal fade" id="myupload" role="dialog">
+    <div class="modal-dialog">
+    
+    <!-- Modal content-->
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Upload a picture</h4>
+              </div>
+              <div class="modal-body">
+               
+                    <form ref='uploadForm' 
+                      id='uploadForm' 
+                      action='/profilepic' 
+                      method='post' 
+                      encType="multipart/form-data">
+                        <input type="file" name="sampleFile" />
+                        <br/>
+                        <input type='submit' value='Upload!' />
+                    </form>
+                         
+              </div>
+                            
+                         
+             </div>
+          </div>
+                      
+        </div>
+
+
+
+
 
 </div>
 </div>

@@ -11,33 +11,30 @@
   </button>
 
   <div class="collapse f" id="navbarResponsive">
-    <ul class="navbar-nav adn">
+    <ul class="navbar-nav adn" >
       <li class="md active">
         <a class="mb" href="/home">Home <span class="zt">(current)</span></a>
       </li>
       <li class="md">
-        <a class="mb" href="/profile">Profile</a>
+        <a class="mb" href="/profile">Profile</span></a>
       </li>
-      <li class="md">
-        <a class="mb" data-toggle="modal" href="/dash">Dashboard</a>
-      </li>
+      
 
     </ul>
 
     <form class="kl zc ro sk">
       <input class="form-control" type="text" data-action="grow" placeholder="Search">
       <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-          <i class="glyphicon glyphicon-search"></i>
-          </button>
       </div>
     </form>
 
     <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="/cssFiles/profile_pic.png" class="img-thumbnail" alt="Cinque Terre" width="30px" height="30px"><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false"> <img src="<%=user.image %>" class="img-thumbnail" alt="Cinque Terre" width="30px" height="30px"><span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li ><a href="/dash">Admin</a></li>
               <li><a href="/profile">Profile</a></li>
               <li><a href="/logout">Logout</a></li>
+              
             </ul>
      </li>
         

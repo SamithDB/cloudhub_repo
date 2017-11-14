@@ -8449,7 +8449,8 @@ img.zoom-img {
   background-size: cover; }
 
 .blg {
-  max-width: 100px;
+  width: 120px;
+  height: 120px;
   margin-top: -70px;
   margin-bottom: 5px;
   border: 3px solid #fff;

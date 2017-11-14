@@ -20,6 +20,7 @@ var flash    = require('connect-flash');
 require('./config/passport')(passport); // pass passport for configuration
 
 app.use('/cssFiles', express.static(__dirname + '/assets')); // for CSS
+app.use('/pics', express.static(__dirname + '/propics')); // for CSS
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
