@@ -194,6 +194,10 @@
                             <label><%=data[i].post%></label>
                             <% }else if(data[i].type=="url"){%>
                             <a href="<%=data[i].post%>" target="_blank"><%=data[i].post%></a>
+                            <br/>
+                              <object src="<%=data[i].post%>">
+                                  <img src="/cssFiles/links.jpg" style="width: 100px; height: 100px">
+                               </object>
                             <% }else {%>
                             <label><%=data[i].post%></label>
                             <% }%>

@@ -8449,8 +8449,8 @@ img.zoom-img {
   background-size: cover; }
 
 .blg {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   margin-top: -70px;
   margin-bottom: 5px;
   border: 3px solid #fff;
@@ -8459,7 +8459,8 @@ img.zoom-img {
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); }
 
 .newblg{
-   max-width: 40px;
+  width: 40px;
+  height: 40px;
   margin-top: -70px;
   margin-top: 0px;
   margin-bottom: 5px;
