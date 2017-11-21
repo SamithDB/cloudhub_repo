@@ -134,10 +134,11 @@
                       <input name="datetime" type="hidden" value= <%=datetime %> >
                       <input name="depid" type="hidden" value= <%=user.department_iddepartment %> >
                       <input name="msgtype" type="hidden" value="text" >
+                      <input name="url" type="hidden" value="no url" >
                     </div>
                     <div class="row">      
                     <div class="col-md-1 col-sm-2"><a href="#"  title="Link" data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-link pull-left"></span></a></div>
-                    <div class="col-md-1 col-sm-2" align="left"> <a href="#" data-toggle="tooltip" title="File"><span class="glyphicon glyphicon-folder-open"></span></a></div>              
+                    <div class="col-md-1 col-sm-2" align="left"> <a href="/gdrive" data-toggle="tooltip" title="File"><span class="glyphicon glyphicon-folder-open"></span></a></div>              
                     <div class="col-md-10 col-sm-5" align="right">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
                     </div>
 
@@ -193,7 +194,8 @@
                             <%if(data[i].type=="text"){%>
                             <label><%=data[i].post%></label>
                             <% }else if(data[i].type=="url"){%>
-                            <a href="<%=data[i].post%>" target="_blank"><%=data[i].post%></a>
+                            <label><%=data[i].post%></label><br/>
+                            <a href="<%=data[i].url%>" target="_blank"><%=data[i].url%></a>
                             <br/>
                               <object src="<%=data[i].post%>">
                                   <img src="/cssFiles/links.jpg" style="width: 100px; height: 100px">
@@ -216,10 +218,10 @@
                                     <div class="buttons">
 
                                   <button type="submit" class="glyphicon glyphicon-trash" style="background:none!important;
-    border:none; 
-    padding:0!important;
-    /*border is optional*/
-    border-bottom:1px solid #444; ">Delete</button>
+                                    border:none; 
+                                    padding:0!important;
+                                    /*border is optional*/
+                                    border-bottom:1px solid #444; ">Delete</button>
                                 </div>
                                   </div>
                                 </form>
@@ -252,13 +254,13 @@
       <div class="mv">
         <label class="control-label" style="color: #336666">Announcements</label>
         <ul class="dc atd">
-          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 1 <a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> <%=ann[0].post %>
           </li>
-          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 2 <a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> <%=ann[1].post %> 
           </li>
-          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 3 <a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> <%=ann[2].post %> 
           </li>
-          <li><span class="glyphicon glyphicon-bullhorn"></span> Announcement 4<a href=""></a>
+          <li><span class="glyphicon glyphicon-bullhorn"></span> <%=ann[3].post %>
           </li>
         </ul>
       </div>
@@ -300,7 +302,10 @@
                     <form action="/posting" role="form"  method="post">
 
                     <div class="form-group">
-                          <textarea class="form-control" rows="3" name="postnews" placeholder="Past URL here"></textarea>
+                          <textarea class="form-control" rows="3" name="postnews" placeholder="Past text here"></textarea>
+                    </div>
+                    <div class="form-group">
+                          <input class="form-control" rows="3" name="url" placeholder="Past URL here"></input>
                     </div>
                     <div>
                       <%

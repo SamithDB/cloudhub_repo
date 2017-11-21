@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" ag-app>
 <head>
-  <title>Employee Portel | Dashbord</title>
+  <title>Dashbord</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <link href="/cssFiles/css" rel="stylesheet" type="text/css">
-    <link href="/cssFiles/toolkit.css" rel="stylesheet">
+  <link href="/cssFiles/css" rel="stylesheet" type="text/css">
+  <link href="/cssFiles/toolkit.css" rel="stylesheet">
   <link href="/cssFiles/application.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
   <style>
       body {
@@ -45,14 +46,12 @@
   <br/>
   <br/>
   <div class="row"><!--start of 1st row--> 
-    <div class="col-sm-2"><br> <h2><span class="glyphicon glyphicon-dashboard"></span> Dashboard</h2></div>
+    <div class="col-sm-2"><br> <h2><span class="glyphicon glyphicon-dashboard"></span> Admin Panel</h2></div>
     <div class="col-sm-10" style="border-bottom-style: outset;border-left-style:outset;">
      <ul class="list-inline"><br>
-      <li><h2>Versions</h2></li>
+      <li><h2 style="color: #336666">Hello! <%= user.fname %></h2></li>
     <li><a href="#">Home</a></li>
-    <li><a href="#">Menu 1</a></li>
-    <li><a href="#">Menu 2</a></li>
-    <li><a href="#">Menu 3</a></li>
+    <li><a href="#">Profile</a></li>
     <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-menu-hamburger"></span>info</a></li>
   </ul>
 </div>
@@ -65,7 +64,7 @@
         <li class="active"><a data-toggle="tab" href="#home"><span class="glyphicon glyphicon-home"></span> Main</a></li>
         <li><a data-toggle="tab" href="#menu1"><span class="glyphicon glyphicon-user"></span>  Employees</a></li>
         <li><a data-toggle="tab" href="#menu2"><span class="glyphicon glyphicon-bullhorn"></span> Announcements</a></li>
-        <li><a data-toggle="tab" href="#menu3"><span class="glyphicon glyphicon-th"></span> Calenders</a></li>
+        <li><a data-toggle="tab" href="#menu3"><span class="glyphicon glyphicon-th"></span> Calendars</a></li>
         <li><a data-toggle="tab" href="#menu4"><span class="glyphicon glyphicon-trash"></span> Settings</a></li>
       </ul>
       </div>
@@ -83,7 +82,7 @@
                       <div class="mu sh sp abk">
                       <div class="mv">
                         <div class="row-md-1">
-                          <img class="newblg" src="/cssFiles/profile_pic.png" >
+                          <img class="newblg" src=<%=user.image %> >
                           <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
                    
                           </div>
@@ -100,11 +99,13 @@
                                     datetime += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); 
                                     %>
                                   <input name="datetime" type="hidden" value= <%=datetime %> >
-
-                                  <div class="form-group">
+                                  <input name="msgtype" type="hidden" value="text" >
+                                  <input name="url" type="hidden" value="no url" >
+                                </div>
+                                <div class="form-group">
                                     <label >Posting For :</label>
                                       
-                                      <div class="form-group">
+                                      <div class="form-group" >
                                         <select class="form-control" id="sel2" name="depid">
                                           <option value="1">All</option>
                                           <option value="2">Marketing</option>
@@ -112,9 +113,6 @@
                                         </select>
                                       </div>
                                     
-                                  </div>
-
-                                  <input name="msgtype" type="hidden" value="text" >
                                 </div>
                                 <div class="row">      
                                 <div class="col-md-1 col-sm-2"><a href="#"  title="Link" data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-link pull-left"></span></a></div>
@@ -136,7 +134,7 @@
               <div class="mv arx">
               <div class="na"></div>
               <div class="mv arx" >          
-            <img class="blg"  src="/cssFiles/profile_pic.jpg">             
+            <img class="blg"  src=<%=user.image %> >             
                   <h6 class="mw">
                    <br>
                     <a class="bjx" > <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %></label>
@@ -175,20 +173,25 @@
                             </div>
                             <div class="modal-body">
                              
-                                  <form action="/posting" role="form"  method="post">
+                                    <form action="/posting" role="form"  method="post">
 
-                                  <div class="form-group">
-                                        <textarea class="form-control" rows="3" name="postnews" placeholder="Past URL here"></textarea>
-                                  </div>
-                                  <div>
-                                    <%
-                                      var now = new Date(); 
-                                      var datetime = now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate(); 
-                                      datetime += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); 
-                                      %>
-                                    <input name="datetime" type="hidden" value= <%=datetime %> >
                                     <div class="form-group">
-                                    <label >Posting For :</label>
+                                          <textarea class="form-control" rows="3" name="postnews" placeholder="Past text here"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                          <input class="form-control" rows="3" name="url" placeholder="Past URL here"></input>
+                                    </div>
+                                    <div>
+                                      <%
+                                        var now = new Date(); 
+                                        var datetime = now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate(); 
+                                        datetime += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); 
+                                        %>
+                                      <input name="datetime" type="hidden" value= <%=datetime %> >
+                                      <input name="msgtype" type="hidden" value="url" >
+                                    </div>
+                                    <div class="form-group">
+                                      <label >Posting For :</label>
                                       
                                       <div class="form-group" >
                                         <select class="form-control" id="sel2" name="depid">
@@ -198,15 +201,13 @@
                                         </select>
                                       </div>
                                     
-                                  </div>
-                                    <input name="msgtype" type="hidden" value="url" >
-                                  </div>
-                                  <div class="row">              
-                                  <div class="col-md-10 col-sm-5" align="left">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
-                                  <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
-                                  </div>
+                                    </div>
+                                    <div class="row">              
+                                    <div class="col-md-10 col-sm-5" align="left">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
+                                    <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
+                                    </div>
 
-                                  </form>
+                                    </form>
                                        
                             </div>
                                           
@@ -223,97 +224,156 @@
         <div id="menu1" class="tab-pane fade">
           <h3>Emploees</h3>
           <div class="row">
-          <div class="col-md-8"><!--start of 1nd colom emploees-->
+            <div class="col-md-8">
+                      <div class="mu sh sp abk">
+                      <div class="mv">
+                          <div class="row-md-5">                    
+                                <form action="/viewprofile" role="form"  method="get">
 
-            <input type="text" name="search"  placeholder="Search..">
-          </div><!--end of 1nd colom emploees-->
+                                <div class="form-group">
+                                      <button type="submit" value="Grant" class="btn btn-success">Search</button>
+                                </div>
+                               
+                                </form>
+                          </div>
+                           
+                          </div>
+                          </div>
+            </div>
 
-    <div class="col-md-4" ><!--start of 2nd colom emploees-->
-    <div class="mu sh sp abk">
-        <div class="mv">
-         
-        </div>      
-  </div>
-  </div><!--end of 2nd colom emploees-->
-  </div>
-  </div>
+          <div class="col-md-4">
+              <div class="mu sh sp abk">
+              <div class="mv">
+              <div class="mu blf abk">
+              <div class="mv arx">
+              <div class="mv arx" >          
+                <h3>Pending User Requests</h3>
+                <div class="pannel">
+
+                        
+                        <% 
+                        
+                          if(allusrs.length){ 
+                          for(var i = 0;i < allusrs.length;i++) { 
+                          if(allusrs[i].status=="A"){
+
+                        %>
+                          
+                          <form action="/apprv" role="form"  method="post">
+
+                                <div class="form-group">
+                                  <table class="table table-dark">
+                                    <tr>
+                                      <td>
+                                        <label><%=allusrs[i].username%></label>
+                                        <input type="hidden" name="usrid" value=<%=allusrs[i].idlogin%> />
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                      <label >Set Department :</label>
+                                      <div class="form-group" >
+                                        <select class="form-control" id="sel2" name="dep">
+                                          <option value="1">Default</option>
+                                          <option value="2">Marketing</option>
+                                          <option value="3">Developing</option>
+                                          <option value="3">All</option>
+                                        </select>
+                                      </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <select class="form-control" id="sel2" name="level">
+                                          <option value="user">User</option>
+                                          <option value="manager">Manager</option>
+                                          <option value="admin">Admin</option>
+                                        </select>
+                                      </td>
+                                      <td><button type="submit" value="Grant" class="btn btn-success">Grant</button></td>
+                                    </tr>
+                                  </table>
+                                </div>
+                               
+                          </form>
+                          <hr/>
+
+                        <% 
+                        }else{
+                          %>
+                       
+                        
+                          <%
+                        }
+                      }
+                        }else{ %>
+                       
+                          <lable>No Users</lable>
+                        
+                      <% 
+                    }
+                       %>
+
+                    </div>
+
+              </div>
+              </div>
+              </div>
+              </div>      
+              </div>
+        </div><!--end of 2nd colome-->
+       </div><!--end of home-row-->
+      </div>
 
 
         <div id="menu2" class="tab-pane fade">
-          <h3>Set Announcement 1 :</h3>
+          <h3>Set Announcements :</h3>
           <form action="/ann" role="form"  method="post">
+                    <div class="form-group">
+                          <label >Announcement Number :</label>
+                                      
+                                      <div class="form-group" >
+                                        <select class="form-control" id="sel2" name="annnum">
+                                          <option value="1">Announcement 1</option>
+                                          <option value="2">Announcement 2</option>
+                                          <option value="3">Announcement 3</option>
+                                          <option value="3">Announcement 4</option>
+                                        </select>
+                                      </div>
+                                    
+                    </div>
 
                     <div class="form-group">
-                          <textarea class="form-control" rows="3" name="postnews" placeholder="Type Here"></textarea>
+                          <textarea class="form-control" rows="3" name="postann" placeholder="Type Here"></textarea>
                     </div>
-                    <div>
-                      <input name="ann" type="hidden" value="1" %> >
-                      <input name="usr" type="hidden" value= <%=user.idemployee %> >
-                    </div>
-                    <div class="row">                  
-                    <div class="col-md-1 col-sm-2" align="right">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Set  </button></div>
-                    </div>
-
-           </form>
-           <hr/>
-           <h3>Set Announcement 2 :</h3>
-          <form action="/ann" role="form"  method="post">
-
                     <div class="form-group">
-                          <textarea class="form-control" rows="3" name="postnews" placeholder="Type Here"></textarea>
-                    </div>
-                    <div>
-                      <input name="ann" type="hidden" value="1" %> >
+                       <%
+                        var now = new Date(); 
+                        var datetime = now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate(); 
+                        datetime += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); 
+                         %>
+                      <input name="datetime" type="hidden" value= <%=datetime %> >
                       <input name="usr" type="hidden" value= <%=user.idemployee %> >
-                    </div>
-                    <div class="row">                  
-                    <div class="col-md-1 col-sm-2" align="right">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Set  </button></div>
-                    </div>
+                     </div>
 
-           </form>
-           <hr/>
-           <h3>Set Announcement 3 :</h3>
-          <form action="/ann" role="form"  method="post">
-
-                    <div class="form-group">
-                          <textarea class="form-control" rows="3" name="postnews" placeholder="Type Here"></textarea>
+                     <div class="form-group">  
+                     <input type="hidden" name="_method" value="put" align="right"/>
+                     <button type="submit" class="btn btn-info btn pull-left ">Publish</button>
                     </div>
-                    <div>
-                      <input name="ann" type="hidden" value="1" %> >
-                      <input name="usr" type="hidden" value= <%=user.idemployee %> >
-                    </div>
-                    <div class="row">                  
-                    <div class="col-md-1 col-sm-2" align="right">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Set  </button></div>
-                    </div>
-
-           </form>
-           <hr/>
-           <h3>Set Announcement 4 :</h3>
-          <form action="/ann" role="form"  method="post">
-
-                    <div class="form-group">
-                          <textarea class="form-control" rows="3" name="postnews" placeholder="Type Here"></textarea>
-                    </div>
-                    <div>
-                      <input name="ann" type="hidden" value="4" %> >
-                      <input name="usr" type="hidden" value= <%=user.idemployee %> >
-                    </div>
-                    <div class="row">                  
-                    <div class="col-md-1 col-sm-2" align="right">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Set  </button></div>
-                    </div>
+                    <br/>
 
            </form>
            <hr/>
         </div>
 
         <div id="menu3" class="tab-pane fade">
-          <h3>Menu 3</h3>
-          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+          <h3>Calendar</h3>
+          <p>Under Construction</p>
         </div>
 
         <div id="menu4" class="tab-pane fade">
-          <h3>Menu 4</h3>
-          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+          <h3>Settings</h3>
+          <p>Under Construction</p>
         </div>
 
         </div>

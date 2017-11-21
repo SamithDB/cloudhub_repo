@@ -82,6 +82,23 @@ module.exports = function(app, passport) {
 	});
 
 	// =====================================
+	// VIEW SECTION ========================
+	app.get('/viewprofile', isLoggedIn, function(req, res) {
+
+		connection.query("SELECT * FROM employee WHERE idemployee = ?",[2], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+
+                    res.render('profileview.ejs', {
+						user : rows[0] //  pass to template
+					});
+
+        });
+
+		
+	});
+
+	// =====================================
 	// =====================================
 	// EDIT USER POST ACTION
 
@@ -142,7 +159,6 @@ module.exports = function(app, passport) {
 
 
 
-
 	// =====================================
 	// Home SECTION =========================
 	// =====================================
@@ -160,15 +176,21 @@ module.exports = function(app, passport) {
 
 			        			var query = connection.query('SELECT * FROM employee',function(err3,rowlist){
 				        		if(err3)
-				        			console.log(err3);;
+				        			console.log(err3);; 
 
-			        				res.render('home.ejs', {
-									employeelist : rowlist,
-									user : rows[0],							//  pass to template
-									data : post
+				        			var query = connection.query('SELECT * FROM announcements',function(err4,anns){
+				        			if(err4)
+				        				console.log(err4);;
+
+				        				res.render('home.ejs', {
+										employeelist : rowlist,
+										user : rows[0],							//  pass to template
+										data : post,
+										ann : anns
 									
-									});
+										});
 
+			        				});
 			        			});
 			        		});
                    
@@ -193,10 +215,11 @@ module.exports = function(app, passport) {
 						                        newPost.type = req.body.msgtype;
 						                        newPost.employee_idemployee = rows[0].idemployee;
 						                        newPost.department_iddepartment = req.body.depid;
+						                        newPost.url = req.body.url;
 						                        
 						                        console.log("Connected!");
-						                        var insertQuery = "INSERT INTO posts (posts.post, posts.when, posts.type, posts.employee_idemployee,posts.department_iddepartment) values (?,?,?,?,?)";
-							                        connection.query(insertQuery,[ newPost.post, newPost.when,newPost.type,newPost.employee_idemployee,newPost.department_iddepartment],function(err, rows) {
+						                        var insertQuery = "INSERT INTO posts (posts.post, posts.when, posts.type, posts.employee_idemployee,posts.department_iddepartment,posts.url) values (?,?,?,?,?,?)";
+							                        connection.query(insertQuery,[ newPost.post, newPost.when,newPost.type,newPost.employee_idemployee,newPost.department_iddepartment,newPost.url],function(err, rows) {
 							                        if (err){
 							                        	console.log(err);;
 							                        }else{
@@ -209,6 +232,17 @@ module.exports = function(app, passport) {
 						            });
 
 			});
+
+	// =====================================
+	// G Drive SECTION =====================
+	// =====================================
+	app.get('/gdrive', function(req, res) {
+
+                    res.render('gdrive.ejs', {
+                    	
+					});
+
+        });
 
 
 
@@ -245,18 +279,83 @@ module.exports = function(app, passport) {
 				        		if(err3)
 				        			console.log(err3);;
 
-			        				res.render('dashboard.ejs', {
-									employeelist : rowlist,
-									user : rows[0],		//  pass to template
-								
-									});
+				        			var query = connection.query('SELECT * FROM login',function(err4,usrlist){
+				        			if(err3)
+				        				console.log(err4);;
 
+				        				res.render('dashboard.ejs', {
+										employeelist : rowlist,
+										user : rows[0],		//  pass to template
+										allusrs : usrlist
+									
+										});
+
+			        			  	});
 			        			});
                    
         	});
 
 
 	});
+
+
+	// =====================================
+	// =====================================
+	// EDIT Announcements
+
+	app.post('/ann', function(req, res, next) {
+
+		
+			var newann = new Object();
+			newann.annid = req.body.annnum;
+			newann.post = req.body.postann;
+			newann.when = req.body.datetime;
+			newann.employee_idemployee = req.body.usr;
+
+			var insertQuery = "UPDATE announcements SET announcements.post = ?, announcements.when = ?, announcements.employee_idemployee = ? WHERE announcements.idannouncements = ?";
+			connection.query(insertQuery,[ newann.post, newann.when,newann.employee_idemployee,newann.annid],function(err, rows) {
+				 if (err) {
+					console.log(err);
+				
+					
+					
+				} else {
+					console.log('Data updated successfully!');
+					res.redirect('/home'); 
+					
+				}
+			})
+		
+
+	});
+
+	// =====================================
+	// =====================================
+	// EDIT Announcements
+
+	app.post('/apprv', function(req, res, next) {
+
+		
+			var newusr = new Object();
+			newusr.usrid = req.body.usrid;
+			newusr.level = req.body.level;
+			newusr.status = "B";
+
+			var insertQuery = "UPDATE login SET login.level = ?, login.status = ? WHERE login.idlogin = ?";
+			connection.query(insertQuery,[ newusr.level, newusr.status,newusr.usrid ],function(err, rows) {
+				 if (err) {
+					console.log(err);
+				
+				} else {
+					console.log('Permition Granted');
+					res.redirect('/home'); 
+					
+				}
+			})
+		
+
+	});
+
 
 	// =====================================
 	// LOGOUT ==============================

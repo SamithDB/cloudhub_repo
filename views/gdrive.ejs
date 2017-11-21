@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Picker Example</title>
+    <!-- Bootstrap / Fontawesome -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+     <link href="./css" rel="stylesheet" type="text/css">
+    <link href="./toolkit.css" rel="stylesheet">
+  <link href="./application.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300&amp;subset=latin,cyrillic-ext,greek-ext,greek,vietnamese,latin-ext,cyrillic" rel="stylesheet">
+
+
+
+   
+     <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+      function start() {
+        // Initializes the client with the API key and the Translate API.
+        gapi.client.init({
+          'apiKey': ' AIzaSyBGAEL4JNkrdjBhoRpFqsqcWZN_nLZkdgw',
+          'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/translate/v2/rest'],
+        }).then(function() {
+          // Executes an API request, and returns a Promise.
+          // The method name `language.translations.list` comes from the API discovery.
+          return gapi.client.language.translations.list({
+            q: 'hello world',
+            source: 'en',
+            target: 'de',
+          });
+        }).then(function(response) {
+          console.log(response.result.data.translations[0].translatedText);
+        }, function(reason) {
+          console.log('Error: ' + reason.result.error.message);
+        });
+      };
+
+      // Loads the JavaScript client library and invokes `start` afterwards.
+      gapi.load('client', start);
+    </script>
+
+    <script type="text/javascript">
+
+      // The Browser API key obtained from the Google API Console.
+      var developerKey = 'AIzaSyBGAEL4JNkrdjBhoRpFqsqcWZN_nLZkdgw';
+
+      // The Client ID obtained from the Google API Console. Replace with your own Client ID.
+      var clientId = "633621342907-g5a3e121npdtb8ms06mvsmc6ivcrlhbl.apps.googleusercontent.com"
+
+      // Scope to use to access user's photos.
+      var scope = ['https://www.googleapis.com/auth/drive.file'];
+
+      var pickerApiLoaded = false;
+      var oauthToken;
+
+      // Use the API Loader script to load google.picker and gapi.auth.
+      function onApiLoad() {
+        gapi.load('auth', {'callback': onAuthApiLoad});
+        gapi.load('picker', {'callback': onPickerApiLoad});
+      }
+
+      function onAuthApiLoad() {
+        window.gapi.auth.authorize(
+            {
+              'client_id': clientId,
+              'scope': scope,
+              'immediate': false
+            },
+            handleAuthResult);
+      }
+
+      function onPickerApiLoad() {
+        pickerApiLoaded = true;
+        createPicker();
+      }
+
+      function handleAuthResult(authResult) {
+        if (authResult && !authResult.error) {
+          oauthToken = authResult.access_token;
+          createPicker();
+        }
+      }
+
+      // Create and render a Picker object for picking user Photos.
+      function createPicker() {
+        if (pickerApiLoaded && oauthToken) {
+          var picker = new google.picker.PickerBuilder().
+              addView(google.picker.ViewId.DOCS).
+              setAppId(this.clientId).
+              setOAuthToken(oauthToken).
+              setDeveloperKey(developerKey).
+              setCallback(pickerCallback).
+              build();
+          picker.setVisible(true);
+        }
+      }
+
+
+
+      // A simple callback implementation.
+      function pickerCallback(data) {
+        var url = 'nothing';
+        if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+          var doc = data[google.picker.Response.DOCUMENTS][0];
+          url = doc[google.picker.Document.URL];
+        }
+        var message = 'You picked: ' + url;
+        document.getElementById('result').innerHTML = message;
+      }
+    </script>
+
+  </head>
+  <body>
+    <div class="container" >
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+           <div class="text-center">
+             
+             <img src="https://davecarty.files.wordpress.com/2015/10/google-drive-logo-2014.jpg" style="width: 450px; height: 450px">
+           
+            <div class="heading-headline">
+              Select Google Drive File
+            </div>
+
+            <p>
+              The plugin also support locales, which allow you to open the Picker using the language of your choice :
+              <a href="#" data-toggle="modal" data-target="#language"></a>
+            </p>
+
+            <div>
+              <a href="javascript:;" lk-google-picker on-picked="onPicked(docs)" on-loaded="onLoaded()" on-cancel="onCancel()" class="btn btn-2 btn-2c btn-blue">
+               
+              </a>
+
+                <a href="#" data-toggle="modal" data-target="#languages"> <i class="fa fa-inbox "></i><span> Copy files</span></a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- The Google API Loader script. -->
+    <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+
+
+    <!--modal body-->
+        <div class="modal fade" id="languages" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Send It </h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-12">
+                
+                  
+                  <h4 data-toggle="modal" data-target="#language">
+                    
+                  </h4>
+                  
+                    <div id="result"></div>
+                
+               <a href="#" data-toggle="modal" data-target="#languages">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-2 btn-2c btn-blue" data-dismiss="modal">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
