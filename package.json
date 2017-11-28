@@ -13,6 +13,7 @@
     "ejs": "^2.3.2",
     "express": "4.15.4",
     "express-fileupload": "^0.3.0",
+    "express-mysql-session": "^1.2.3",
     "express-session": "^1.11.3",
     "moment": "^2.19.2",
     "morgan": "^1.6.0",

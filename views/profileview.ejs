@@ -63,28 +63,22 @@
         <div class="na"></div>
         <div class="mv arx">
           <a >
-            <img class="blg" src=<%=user.image %> >
+            <img class="blg" src=<%=view.image %> >
           </a>
 
           <h6 class="mw">
-             <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %> </label>
+             <label class="control-label" style="color: #336666"><%= view.fname %> <%= view.lname %> </label>
             </a>
           </h6>
 
-          <p class="abk"><%= user.description %></p>
+          <p class="abk"><%= view.description %></p>
 
           <ul class="blh">
             <li class="bli">
-              <a href="" class="bjx" data-toggle="modal">
-                Archive
-                <h6 class="aal"><a href="/archive" class="btn btn-default">Link</a></h6>
-              </a>
+              
             </li>
             <li class="bli">
-              <a href="" class="bjx" data-toggle="modal">
-                Change
-                <h6 class="aal"><a href="" class="btn btn-default" data-toggle="modal" data-target="#myupload">Link</a></h6>
-              </a>
+              
             </li>
           </ul>
         </div>
@@ -96,8 +90,8 @@
         <div class="mv">
           <h6 class="abd">About </h6>
           <ul class="dc atd">
-            <li><span class="glyphicon glyphicon-user"></span> Position <label style="color: #336666"><%= user.designation %></label>
-            </li><li><span class="glyphicon glyphicon-phone"></span> Contact Number <label style="color: #336666"><%= user.contact %></label>
+            <li><span class="glyphicon glyphicon-user"></span> Position <label style="color: #336666"><%= view.designation %></label>
+            </li><li><span class="glyphicon glyphicon-phone"></span> Contact Number <label style="color: #336666"><%= view.contact %></label>
             </li></ul>
         </div>
       </div>
@@ -117,37 +111,37 @@
                   <form >
                  <div class="form-group">
                     <label for="exampleInputPassword1">Employee Number</label><br>
-                    <label class="control-label" style="color: #336666">EMP <%= user.login_idlogin %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666">EMP <%= view.login_idlogin %></label><!--datadase connecting point--> 
                   </div>
 
                   <div class="form-group" style="margin-top: 20px;" >
                     <label for="exampleInputEmail1">Email address</label><br>
-                    <label class="control-label" style="color: #336666"><%= user.username %></label> <!--datadase connecting point-->
+                    <label class="control-label" style="color: #336666"><%= view.username %></label> <!--datadase connecting point-->
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">First Name</label><br>
-                    <label class="control-label" style="color: #336666" ><%= user.fname %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666" ><%= view.fname %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Last Name</label><br>
-                    <label class="control-label" style="color: #336666"><%= user.lname %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= view.lname %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">NIC Number</label><br>
-                    <label class="control-label" style="color: #336666"><%= user.nic %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= view.nic %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">EPF Number</label><br>
-                    <label class="control-label" style="color: #336666"><%= user.EPF %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= view.EPF %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Birth Day</label><br>
-                    <label class="control-label" style="color: #336666"><%= user.birthday %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= view.birthday %></label><!--datadase connecting point--> 
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Address</label><br>
-                    <label class="control-label" style="color: #336666"><%= user.address %></label><!--datadase connecting point--> 
+                    <label class="control-label" style="color: #336666"><%= view.address %></label><!--datadase connecting point--> 
                   </div>
                   
                   <!-- Trigger the modal with a button -->

@@ -12,6 +12,9 @@
 
   <div class="collapse f" id="navbarResponsive">
     <ul class="navbar-nav adn" >
+      
+
+
       <li class="md active">
         <a class="mb" href="/home">Home</a>
       </li>
@@ -22,21 +25,23 @@
 
     </ul>
 
-    <form class="kl zc ro sk">
-      <input class="form-control" type="text" data-action="grow" placeholder="Search">
-      <div class="input-group-btn">
-      </div>
+    <form class="navbar-form navbar-left" role="search" action="/viewprofile" method="post">
+    <div class="form-group">
+      <input type="email" class="form-control" placeholder="Search for Profiles" name="searchmail">
+    </div>
+    <button type="submit" class="btn btn-default">Search</button>
     </form>
-
-    <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false"> <img src="<%=user.image %>" class="img-thumbnail" alt="Cinque Terre" width="30px" height="30px"><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li ><a href="/dash">Admin</a></li>
-              <li><a href="/profile">Profile</a></li>
-              <li><a href="/logout">Logout</a></li>
-              
-            </ul>
-     </li>
+  <div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <img src="<%=user.image %>" class="img-thumbnail"  width="50px" height="50px"> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li ><a href="/dash">Admin</a></li>
+    <li><a href="/profile">Profile</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</div>
         
   </div>
 </nav>

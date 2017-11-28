@@ -12,7 +12,17 @@ var port     = process.env.PORT || 8080;
 var passport = require('passport');
 var flash    = require('connect-flash');
 
-
+var MySQLStore = require('express-mysql-session')(session);
+ 
+var options = {
+    host: '35.200.157.12',
+    port: 3306,
+    user: 'root',
+    password: 'admin123',
+    database: 'EmployeePortal_DB'
+};
+ 
+var sessionStore = new MySQLStore(options);
 
 // configuration ===============================================================
 // connect to database
@@ -35,8 +45,9 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 // required for passport
 app.use(session({
 	secret: 'vidyapathaisalwaysrunning',
-	resave: true,
-	saveUninitialized: true
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false
  } )); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
