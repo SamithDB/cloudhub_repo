@@ -1,13 +1,9 @@
 # Employee Hub
 
 
-Cloudpartners pvt ltd
+Cloudpartners (pvt) Ltd
 
-## Instructions
 
-run these first-
-export GCLOUD_PROJECT=loyal-rookery-183105
-export GCLOUD_STORAGE_BUCKET=loyal-rookery-183105.appspot.com
 
 1. Clone the repo
 2. Install packages: `npm install`

@@ -1,6 +1,4 @@
 // app/routes.js
-module.exports = function(app, passport) {
-
 	
 	var dbconfig = require('../config/database');
 	var mysql = require('mysql');
@@ -9,6 +7,10 @@ module.exports = function(app, passport) {
 	const fileUpload = require('express-fileupload');
 		
 	connection.query('USE ' + dbconfig.database);
+
+module.exports = function(app, passport) {
+
+
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
@@ -83,16 +85,27 @@ module.exports = function(app, passport) {
 
 	// =====================================
 	// VIEW SECTION ========================
-	app.get('/viewprofile', isLoggedIn, function(req, res) {
+	app.post('/viewprofile', function(req, res) {
 
-		connection.query("SELECT * FROM employee WHERE idemployee = ?",[2], function(err, rows) {
+		var newview = new Object();
+		newview.mail = req.body.searchmail;
+
+		connection.query("SELECT * FROM employee WHERE employee.username = ?",[newview.mail], function(err, view) {
                     if (err)
                          console.log(err);;
 
-                    res.render('profileview.ejs', {
-						user : rows[0] //  pass to template
-					});
+	                    connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err1, rows) {
+	                    if (err1)
+	                         console.log(err1);;
 
+	                     	res.render('profileview.ejs', {
+							user : rows[0], //  pass to template
+							view : view[0]
+
+						});
+
+                    });
+                    
         });
 
 		

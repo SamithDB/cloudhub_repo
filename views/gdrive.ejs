@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>Google Picker Example</title>
+    <title>Google Picker</title>
     <!-- Bootstrap / Fontawesome -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -22,31 +22,7 @@
 
    
      <script src="https://apis.google.com/js/api.js"></script>
-    <script>
-      function start() {
-        // Initializes the client with the API key and the Translate API.
-        gapi.client.init({
-          'apiKey': ' AIzaSyBGAEL4JNkrdjBhoRpFqsqcWZN_nLZkdgw',
-          'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/translate/v2/rest'],
-        }).then(function() {
-          // Executes an API request, and returns a Promise.
-          // The method name `language.translations.list` comes from the API discovery.
-          return gapi.client.language.translations.list({
-            q: 'hello world',
-            source: 'en',
-            target: 'de',
-          });
-        }).then(function(response) {
-          console.log(response.result.data.translations[0].translatedText);
-        }, function(reason) {
-          console.log('Error: ' + reason.result.error.message);
-        });
-      };
-
-      // Loads the JavaScript client library and invokes `start` afterwards.
-      gapi.load('client', start);
-    </script>
-
+ 
     <script type="text/javascript">
 
       // The Browser API key obtained from the Google API Console.
@@ -89,32 +65,83 @@
         }
       }
 
-      // Create and render a Picker object for picking user Photos.
-      function createPicker() {
-        if (pickerApiLoaded && oauthToken) {
-          var picker = new google.picker.PickerBuilder().
-              addView(google.picker.ViewId.DOCS).
-              setAppId(this.clientId).
-              setOAuthToken(oauthToken).
-              setDeveloperKey(developerKey).
-              setCallback(pickerCallback).
-              build();
-          picker.setVisible(true);
-        }
+     // Create and render a Picker object for searching images.
+    function createPicker() {
+      if (pickerApiLoaded && oauthToken) {
+        var view = new google.picker.View(google.picker.ViewId.DOCS);
+        
+        var picker = new google.picker.PickerBuilder()
+            .enableFeature(google.picker.Feature.SIMPLE_UPLOAD_ENABLED.Upload)
+            .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+            .setAppId(this.clientId)
+            .setOAuthToken(oauthToken)
+            .addView(view)
+            .addView(google.picker.ViewId.IMAGE_SEARCH)
+            .addView(new google.picker.DocsUploadView())
+            .setDeveloperKey(developerKey)
+            
+            .setCallback(pickerCallback)
+            .build();
+         picker.setVisible(true);
       }
+    }
 
-
-
-      // A simple callback implementation.
-      function pickerCallback(data) {
-        var url = 'nothing';
+    // A simple callback implementation.
+    function pickerCallback(data) {
+      if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+      if (data.action == google.picker.Action.PICKED) {
+        var fileId = data.docs[0].id;
+        
+      }}
+       var url = 'nothing';
         if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
           var doc = data[google.picker.Response.DOCUMENTS][0];
           url = doc[google.picker.Document.URL];
         }
-        var message = 'You picked: ' + url;
+        var message = url;
         document.getElementById('result').innerHTML = message;
+}
+
+      function listFiles() {
+var request = gapi.client.drive.files.list({
+'pageSize': 10,
+'fields': "nextPageToken, files(id, name, webViewLink)"
+});
+
+request.execute(function(resp) {
+appendPre('Files:');
+var files = resp.files;
+if (files && files.length > 0) {
+for (var i = 0; i < files.length; i++) {
+var file = files[i];
+appendPre(file.name + ' (' + file.id + ')' + file.weblink);
+}
+} else {
+appendPre('No files found.');
+}
+});
+}
+
+function retrieveAllFiles(callback) {
+  var retrievePageOfFiles = function(request, result) {
+    request.execute(function(resp) {
+      result = result.concat(resp.items);
+      var nextPageToken = resp.nextPageToken;
+      if (nextPageToken) {
+        request = gapi.client.drive.files.list({
+          'pageToken': nextPageToken
+        });
+        retrievePageOfFiles(request, result);
+      } else {
+        callback(result);
       }
+    });
+  }
+  var initialRequest = gapi.client.drive.files.list();
+  retrievePageOfFiles(initialRequest, [Upload]);
+}
+
+
     </script>
 
   </head>
@@ -140,7 +167,7 @@
                
               </a>
 
-                <a href="#" data-toggle="modal" data-target="#languages"> <i class="fa fa-inbox "></i><span> Copy files</span></a>
+                <a href="#" data-toggle="modal" data-target="#languages"> <i class="fa fa-inbox "></i><span> Share</span></a>
             </div>
           </div>
       </div>
@@ -152,31 +179,40 @@
 
 
     <!--modal body-->
-        <div class="modal fade" id="languages" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal fade" id="languages" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">Send It </h4>
+            <h4 class="modal-title" id="myModalLabel">Share the link</h4>
           </div>
           <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-12">
+				<form action="/posting" role="form"  method="post">
+
+                    <div class="form-group">
+                          <textarea class="form-control" rows="3" name="postnews" placeholder="Past text here"></textarea>
+                    </div>
+                    <div class="form-group">
+						  
+                          <input class="form-control" rows="3" name="url" ><div id="result"></div></input>
+                    </div>
+                    <div>
+                      <%
+                        var now = new Date(); 
+                        var datetime = now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate(); 
+                        datetime += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); 
+                        %>
+                      <input name="datetime" type="hidden" value= <%=datetime %> >
+                      <input name="depid" type="hidden" value= <%=user.department_iddepartment %> >
+                      <input name="msgtype" type="hidden" value="url" >
+                    </div>
+                    <div class="row">              
+                    <div class="col-md-10 col-sm-5" align="left">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
+                    <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
+                    </div>
+
+                    </form>
                 
-                  
-                  <h4 data-toggle="modal" data-target="#language">
-                    
-                  </h4>
-                  
-                    <div id="result"></div>
-                
-               <a href="#" data-toggle="modal" data-target="#languages">
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-2 btn-2c btn-blue" data-dismiss="modal">Send</button>
-          </div>
         </div>
       </div>
     </div>
