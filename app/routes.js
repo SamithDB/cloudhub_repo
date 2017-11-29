@@ -8,6 +8,8 @@
 		
 	connection.query('USE ' + dbconfig.database);
 
+	var JSAlert = require("js-alert");
+
 module.exports = function(app, passport) {
 
 
@@ -75,7 +77,8 @@ module.exports = function(app, passport) {
                          console.log(err);;
 
                     res.render('profile.ejs', {
-						user : rows[0] //  pass to template
+						user : rows[0], //  pass to template
+
 					});
 
         });
@@ -91,20 +94,33 @@ module.exports = function(app, passport) {
 		newview.mail = req.body.searchmail;
 
 		connection.query("SELECT * FROM employee WHERE employee.username = ?",[newview.mail], function(err, view) {
-                    if (err)
-                         console.log(err);;
+                    if (err){
+                         console.log(err);
+                         
+                         
+                     }else{
 
 	                    connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err1, rows) {
 	                    if (err1)
-	                         console.log(err1);;
+	                         console.log(err1);
 
-	                     	res.render('profileview.ejs', {
-							user : rows[0], //  pass to template
-							view : view[0]
+	                     	if(view.length!=0){
+	                     		res.render('profileview.ejs', {
+								user : rows[0], //  pass to template
+								view : view[0]
+								});
+	                     	}else{
+	                     		res.render('profile.ejs', {
+								user : rows[0], //  pass to template
+								message: "flash"
+								});
+	                     	}
+	                     	
+	                     	
 
-						});
 
                     });
+	                }
                     
         });
 
@@ -121,7 +137,7 @@ module.exports = function(app, passport) {
 			connection.query('UPDATE employee SET fname = ?, lname = ?, EPF = ?, nic = ?, birthday = ?, address= ?, contact = ?, designation = ?, description = ?  WHERE login_idlogin = ?',[req.body.fname2, req.body.lname2, req.body.epf2, req.body.nic2, req.body.birthday2, req.body.address2, req.body.contact2, req.body.designation2, req.body.description2, req.user.idlogin], function(err, result) {
 				if (err) {
 					console.log(err);
-					
+					res.redirect('/profile');
 					
 				} else {
 					console.log('Data updated successfully!');

@@ -14,8 +14,8 @@
   <link href="/cssFiles/toolkit.css" rel="stylesheet">
   <link href="/cssFiles/application.css" rel="stylesheet">
 
-
-
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.6/sweetalert2.all.js"></script>
 
 	<script>
 	  function resizeIframe(obj) 
@@ -25,7 +25,7 @@
 	</script>
 
 
-    <style>
+  <style>
       body {
         width: 1px;
         min-width: 100%;
@@ -35,14 +35,23 @@
         padding-top: 60px;
       }
 
-    </style>
+  </style>
 
+  <script >
+    function alt1(){
+      swal(
+          'Oops...',
+          'User Not Found!',
+          'error'
+        )
+    }
+  </script>
 
   </head>
 
 <%- include header.ejs %>
 
-<body>
+<body onload="alt1();">
 
 
 
@@ -51,6 +60,11 @@
 
   <br/>
   <br/>
+
+  <% if (message.length > 0) { %>
+      <div class="alert alert-danger" ><%= message %></div>
+  <%
+} %>
 
 	<div class="row">
 
