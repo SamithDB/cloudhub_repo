@@ -16,6 +16,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.6/sweetalert2.all.js"></script>
+
 <script>
   function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
@@ -38,13 +40,62 @@
       
       }
 
-  </style>
+    </style>
     <script>
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();   
         });
 
             
+    </script>
+
+    <script>
+      function alt(){
+
+      swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          swal(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+          document.getElementById('delform').submit();
+        }
+      })
+
+      } 
+
+      function alt1(){
+      var myVar = <%- JSON.stringify(message) %>;
+      if(myVar=="posterr"){
+        swal({
+          position: 'top-right',
+          type: 'error',
+          title: 'Inputs too long or wrong format',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="posted") {
+        swal({
+          position: 'top-right',
+          type: 'success',
+          title: 'Posted',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
+     
+
+      } 
+
     </script>
   
    
@@ -56,7 +107,7 @@
 
  <div class="container">
 
-  <body>
+  <body onload="alt1();">
       <div class="bs-example">
           <%- include header.ejs %>
       </div>
@@ -209,21 +260,22 @@
                             <%
                             if(data[i].employee_idemployee==user.idemployee){
                               %>
-                                <form action="/delpost" method="post">
+                                <form action="delpost" method="post" id="delform">
                                   <div class="form-group">
                                   <input name="delid" type="hidden" value= <%=data[i].idposts %> >
                                   </div>
                                   <div class="form-group">
-                                    <div class="buttons">
+                                    
+                                  </div>
+                                </form>
+                                <div class="buttons">
 
-                                  <button type="submit" class="glyphicon glyphicon-trash" style="background:none!important;
+                                  <button onclick="alt();" class="glyphicon glyphicon-trash" style="background:none!important;
                                     border:none; 
                                     padding:0!important;
                                     /*border is optional*/
                                     border-bottom:1px solid #444; ">Delete</button>
                                 </div>
-                                  </div>
-                                </form>
                               <%
                             }
                             %>

@@ -38,12 +38,56 @@
   </style>
 
   <script >
+
     function alt1(){
-      swal(
+      var myVar = <%- JSON.stringify(message) %>;
+      if(myVar=="err"){
+        swal(
           'Oops...',
           'User Not Found!',
           'error'
         )
+      }else if (myVar=="upfail") {
+        swal({
+          position: 'top-right',
+          type: 'error',
+          title: 'Wrong Inputs',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="Updated") {
+        swal({
+          position: 'top-right',
+          type: 'success',
+          title: 'Your profile updated',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="notadmin") {
+        swal({
+          position: 'top-right',
+          type: 'error',
+          title: 'Your not an admin',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="Uploaded") {
+        swal({
+          position: 'top-right',
+          type: 'success',
+          title: 'Upload Successful',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="notuploaded") {
+        swal({
+          position: 'top-right',
+          type: 'error',
+          title: 'Upload Failed',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
     }
   </script>
 
@@ -60,11 +104,6 @@
 
   <br/>
   <br/>
-
-  <% if (message.length > 0) { %>
-      <div class="alert alert-danger" ><%= message %></div>
-  <%
-} %>
 
 	<div class="row">
 
@@ -92,14 +131,22 @@
           <ul class="blh">
             <li class="bli">
               <a href="" class="bjx" data-toggle="modal">
-                Archive
-                <h6 class="aal"><a href="" class="btn btn-default">Link</a></h6>
+                Files
+                <h6 class="aal">
+                  <a href="#" class="btn btn-info btn-lg">
+                  <span class="glyphicon glyphicon-cloud-upload"></span>
+                  </a>
+                </h6>
               </a>
             </li>
             <li class="bli">
               <a href="" class="bjx" data-toggle="modal">
-                Change
-                <h6 class="aal"><a href="" class="btn btn-default" data-toggle="modal" data-target="#myupload">Link</a></h6>
+                Pic
+                <h6 class="aal">
+                  <a href="" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myupload">
+                  <span class="glyphicon glyphicon-cloud-upload"></span>
+                  </a
+                </h6>
               </a>
             </li>
           </ul>

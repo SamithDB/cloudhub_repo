@@ -8,7 +8,6 @@
 		
 	connection.query('USE ' + dbconfig.database);
 
-	var JSAlert = require("js-alert");
 
 module.exports = function(app, passport) {
 
@@ -78,7 +77,7 @@ module.exports = function(app, passport) {
 
                     res.render('profile.ejs', {
 						user : rows[0], //  pass to template
-
+						message: ""
 					});
 
         });
@@ -112,7 +111,7 @@ module.exports = function(app, passport) {
 	                     	}else{
 	                     		res.render('profile.ejs', {
 								user : rows[0], //  pass to template
-								message: "flash"
+								message: "err"
 								});
 	                     	}
 	                     	
@@ -137,11 +136,28 @@ module.exports = function(app, passport) {
 			connection.query('UPDATE employee SET fname = ?, lname = ?, EPF = ?, nic = ?, birthday = ?, address= ?, contact = ?, designation = ?, description = ?  WHERE login_idlogin = ?',[req.body.fname2, req.body.lname2, req.body.epf2, req.body.nic2, req.body.birthday2, req.body.address2, req.body.contact2, req.body.designation2, req.body.description2, req.user.idlogin], function(err, result) {
 				if (err) {
 					console.log(err);
-					res.redirect('/profile');
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+
+                    res.render('profile.ejs', {
+						user : rows[0], //  pass to template
+						message: "upfail"
+					});
+
+        			});
 					
 				} else {
-					console.log('Data updated successfully!');
-					res.redirect('/profile'); 
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+
+                    res.render('profile.ejs', {
+						user : rows[0], //  pass to template
+						message: "Updated"
+					});
+
+        			});
 					
 				}
 			})
@@ -170,11 +186,36 @@ module.exports = function(app, passport) {
 		      return res.status(500).send(err);
 		    }else{
 		    	connection.query('UPDATE employee SET image = ? WHERE login_idlogin = ?',['pics/'+req.user.idlogin+'propic.jpg', req.user.idlogin], function(err, result) {
-				if (err) 
+				if (err) {
 					console.log(err);
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
 
-				console.log('pic uploaded!');
-				res.redirect('/profile'); 
+                    res.render('profile.ejs', {
+						user : rows[0], //  pass to template
+						message: "notuploaded"
+					});
+
+        			});
+					
+				}else{
+
+					console.log('pic uploaded!');
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+
+                    res.render('profile.ejs', {
+						user : rows[0], //  pass to template
+						message: "Uploaded"
+					});
+
+        			});
+					
+
+				}
+
 
 				});
 
@@ -215,8 +256,8 @@ module.exports = function(app, passport) {
 										employeelist : rowlist,
 										user : rows[0],							//  pass to template
 										data : post,
-										ann : anns
-									
+										ann : anns,
+										message: ""
 										});
 
 			        				});
@@ -250,15 +291,80 @@ module.exports = function(app, passport) {
 						                        var insertQuery = "INSERT INTO posts (posts.post, posts.when, posts.type, posts.employee_idemployee,posts.department_iddepartment,posts.url) values (?,?,?,?,?,?)";
 							                        connection.query(insertQuery,[ newPost.post, newPost.when,newPost.type,newPost.employee_idemployee,newPost.department_iddepartment,newPost.url],function(err, rows) {
 							                        if (err){
-							                        	console.log(err);;
+							                        		console.log(err);
+
+							                        		connection.query("SELECT * FROM employee WHERE login_idlogin = ? ",[req.user.idlogin], function(err1, rows) {
+										                    if (err1)
+										                         console.log(err1);;
+
+										                     		var query = connection.query('SELECT * FROM posts ORDER BY idposts DESC',function(err2,post){
+													        		if(err2)
+													        			console.log(err2);;
+
+													        			var query = connection.query('SELECT * FROM employee',function(err3,rowlist){
+														        		if(err3)
+														        			console.log(err3);; 
+
+														        			var query = connection.query('SELECT * FROM announcements',function(err4,anns){
+														        			if(err4)
+														        				console.log(err4);;
+
+														        				res.render('home.ejs', {
+																				employeelist : rowlist,
+																				user : rows[0],							//  pass to template
+																				data : post,
+																				ann : anns,
+																				message: "posterr"
+																				});
+
+													        				});
+													        			});
+													        		});
+										                   
+										        			});
+								                        	
+
+
 							                        }else{
-							                        	console.log("Posting Done");
+							                        	connection.query("SELECT * FROM employee WHERE login_idlogin = ? ",[req.user.idlogin], function(err1, rows) {
+									                    if (err1)
+									                         console.log(err1);;
+
+									                     		var query = connection.query('SELECT * FROM posts ORDER BY idposts DESC',function(err2,post){
+												        		if(err2)
+												        			console.log(err2);;
+
+												        			var query = connection.query('SELECT * FROM employee',function(err3,rowlist){
+													        		if(err3)
+													        			console.log(err3);; 
+
+													        			var query = connection.query('SELECT * FROM announcements',function(err4,anns){
+													        			if(err4)
+													        				console.log(err4);;
+
+													        				res.render('home.ejs', {
+																			employeelist : rowlist,
+																			user : rows[0],							//  pass to template
+																			data : post,
+																			ann : anns,
+																			message: "posted"
+																			});
+
+												        				});
+												        			});
+												        		});
+									                   
+									        			});
+
 							                        }
 
 							                        
 						                    });
-							            res.redirect('/home'); 
+
+							           //res.redirect('/home'); 
+
 						            });
+
 
 			});
 
@@ -311,15 +417,22 @@ module.exports = function(app, passport) {
 				        			var query = connection.query('SELECT * FROM login',function(err4,usrlist){
 				        			if(err3)
 				        				console.log(err4);;
-
+				        			if(req.user.level=="admin"){
 				        				res.render('dashboard.ejs', {
 										employeelist : rowlist,
 										user : rows[0],		//  pass to template
 										allusrs : usrlist
-									
 										});
+				        			}else{
+				        				res.render('profile.ejs', {
+										user : rows[0], //  pass to template
+										message: "notadmin"
+										});
+				        			}
+				        				
 
 			        			  	});
+				        			
 			        			});
                    
         	});
