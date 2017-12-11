@@ -62,7 +62,7 @@
     <div class="col-sm-2" style="border-top-style:outset;"><div class="well well-xs">         
       <ul class="nav nav-tabs nav-stacked">
         <li class="active"><a data-toggle="tab" href="#home"><span class="glyphicon glyphicon-home"></span> Main</a></li>
-        <li><a data-toggle="tab" href="#menu1"><span class="glyphicon glyphicon-user"></span>  Employees</a></li>
+        <li><a data-toggle="tab" href="#menu1"><span class="glyphicon glyphicon-user"></span> Employees</a></li>
         <li><a data-toggle="tab" href="#menu2"><span class="glyphicon glyphicon-bullhorn"></span> Announcements</a></li>
         <li><a data-toggle="tab" href="#menu3"><span class="glyphicon glyphicon-th"></span> Calendars</a></li>
         <li><a data-toggle="tab" href="#menu4"><span class="glyphicon glyphicon-trash"></span> Settings</a></li>
@@ -236,6 +236,77 @@
                                       <button type="submit" class="btn btn-default">Search</button>
                                       </form>
                                 </div>
+
+                                <div>
+                                          <div class="pannel">
+                                            <% 
+                                            
+                                              if(allusrs.length){ 
+                                              for(var i = 0;i < allusrs.length;i++) { 
+                                              if(allusrs[i].status=="B"){
+
+                                            %>
+                                              
+                                              <form action="/apprv" role="form"  method="post">
+
+                                                    <div class="form-group">
+                                                      <table class="table table-dark">
+                                                        <tr>
+                                                          <td>
+                                                            <label><%=allusrs[i].username%></label>
+                                                            <input type="hidden" name="usrid" value=<%=allusrs[i].idlogin%> />
+                                                          </td>
+                                                        
+                                                          <td>
+                                                          <div class="form-group" >
+                                                            <select class="form-control" id="sel2" name="dep">
+                                                              <option value="3">Developing</option>
+                                                              <option value="4">Marketing</option>
+                                                            </select>
+                                                          </div>
+                                                          </td>
+                                                        
+                                                          <td>
+                                                            <select class="form-control" id="sel2" name="level">
+                                                              <option value="user">User</option>
+                                                              <option value="manager">Manager</option>
+                                                              <option value="admin">Admin</option>
+                                                            </select>
+                                                          </td>
+                                                          <td><button type="submit" value="Grant" class="btn btn-success">Change</button></td>
+                                                          </form>
+                                                          <form action="/revk" role="form"  method="post">
+                                                          <input type="hidden" name="usrid" value=<%=allusrs[i].idlogin%> />
+                                                          <td><button  class="btn btn-success" >Revoke User</button></td>
+                                                          </form>
+                                                        </tr>
+                                                      </table>
+                                                    </div>
+                                                   
+                                              
+                                              <hr/>
+
+                                            <% 
+                                            }else{
+                                              %>
+                                           
+                                            
+                                              <%
+                                            }
+                                          }
+                                            }else{ %>
+                                           
+                                              <lable>No Users</lable>
+                                            
+                                          <% 
+                                        }
+                                           %>
+
+                                        </div>
+
+
+                                </div>
+
                           </div>
                           
             </div>

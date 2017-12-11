@@ -58,7 +58,7 @@ module.exports = function(app, passport) {
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
 		
-		successRedirect : '/profile', // redirect to the secure home section
+		successRedirect : '/fillprofile', // redirect to the secure home section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 
@@ -78,6 +78,29 @@ module.exports = function(app, passport) {
                     res.render('profile.ejs', {
 						user : rows[0], //  pass to template
 						message: ""
+<<<<<<< HEAD
+					});
+
+        });
+
+		
+	});
+
+	// =====================================
+	// Fill Profile =========================
+	// =====================================
+
+	app.get('/fillprofile', isLoggedIn, function(req, res) {
+
+		connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+
+                    res.render('profile.ejs', {
+						user : rows[0], //  pass to template
+						message: ""
+=======
+>>>>>>> f55b329757d0cb57a9f48ef1a508c01023a2ac36
 					});
 
         });
@@ -373,9 +396,15 @@ module.exports = function(app, passport) {
 	// =====================================
 	app.get('/gdrive', function(req, res) {
 
+					connection.query("SELECT * FROM employee WHERE login_idlogin = ?",[req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+
                     res.render('gdrive.ejs', {
-                    	
+						user : rows[0] //  pass to template
 					});
+
+        			});
 
         });
 
@@ -473,7 +502,7 @@ module.exports = function(app, passport) {
 
 	// =====================================
 	// =====================================
-	// EDIT Announcements
+	// Apprv Usr
 
 	app.post('/apprv', function(req, res, next) {
 
@@ -483,16 +512,44 @@ module.exports = function(app, passport) {
 			newusr.level = req.body.level;
 			newusr.status = "B";
 
+
 			var insertQuery = "UPDATE login SET login.level = ?, login.status = ? WHERE login.idlogin = ?";
 			connection.query(insertQuery,[ newusr.level, newusr.status,newusr.usrid ],function(err, rows) {
 				 if (err) {
 					console.log(err);
 				
 				} else {
+					connection.query("UPDATE employee SET department_iddepartment = ? WHERE login_idlogin = ?",[req.body.dep, req.user.idlogin], function(err, rows) {
+                    if (err)
+                         console.log(err);;
+                     });
 					console.log('Permition Granted');
 					res.redirect('/home'); 
 					
 				}
+			})
+		
+
+	});
+
+	// =====================================
+	// =====================================
+	// Rvk Usr
+
+	app.post('/revk', function(req, res, next) {
+
+			var newusr = new Object();
+			newusr.usrid = req.body.usrid;
+			newusr.status = "A";
+
+
+			var insertQuery = "UPDATE login SET login.status = ? WHERE login.idlogin = ?";
+			connection.query(insertQuery,[ newusr.status, newusr.usrid ],function(err, rows) {
+				 if (err) 
+					console.log(err);
+
+				res.redirect('/home');
+				
 			})
 		
 

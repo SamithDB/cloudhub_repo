@@ -1,0 +1,352 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html lang="en" >
+<head>
+	<title>Fill Profile</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<link href="/cssFiles/css.css" rel="stylesheet" type="text/css">
+  <link href="/cssFiles/toolkit.css" rel="stylesheet">
+  <link href="/cssFiles/application.css" rel="stylesheet">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.6/sweetalert2.all.js"></script>
+
+	<script>
+	  function resizeIframe(obj) 
+    {
+		obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+	  }
+	</script>
+
+
+  <style>
+      body {
+        width: 1px;
+        min-width: 100%;
+        *width: 100%;
+        background-color: #ECEFF1;
+        padding-bottom:60px;  
+        padding-top: 60px;
+      }
+
+  </style>
+
+  <script >
+
+    function alt1(){
+      var myVar = <%- JSON.stringify(message) %>;
+      if(myVar=="err"){
+        swal(
+          'Oops...',
+          'User Not Found!',
+          'error'
+        )
+      }else if (myVar=="upfail") {
+        swal({
+          position: 'top-right',
+          type: 'error',
+          title: 'Wrong Inputs',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="Updated") {
+        swal({
+          position: 'top-right',
+          type: 'success',
+          title: 'Your profile updated',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="notadmin") {
+        swal({
+          position: 'top-right',
+          type: 'error',
+          title: 'Your not an admin',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="Uploaded") {
+        swal({
+          position: 'top-right',
+          type: 'success',
+          title: 'Upload Successful',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }else if (myVar=="notuploaded") {
+        swal({
+          position: 'top-right',
+          type: 'error',
+          title: 'Upload Failed',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
+    }
+  </script>
+
+  </head>
+
+<body onload="alt1();">
+
+
+
+<div class="container">
+ <div ng-app="myApp" ng-controller="myCtrl">
+
+  <br/>
+  <br/>
+
+	<div class="row">
+
+		
+
+		<div class="row-md-*">
+ 		<div class="col-md-3" >
+
+    	<div class="mu sh sp abk">
+        <div class="mv">
+        <div class="mu blf abk">
+        <div class="na"></div>
+        <div class="mv arx">
+          <a >
+            <img class="blg" src=<%=user.image %> >
+          </a>
+
+          <h6 class="mw">
+             <label class="control-label" style="color: #336666"><%= user.fname %> <%= user.lname %> </label>
+            </a>
+          </h6>
+
+          <p class="abk"><%= user.description %></p>
+
+          <ul class="blh">
+            
+            <li class="bli">
+              <a href="" class="bjx" data-toggle="modal">
+                Pic
+                <h6 class="aal">
+                  <a href="" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myupload">
+                  <span class="glyphicon glyphicon-cloud-upload"></span>
+                  </a
+                </h6>
+              </a>
+            </li>
+          </ul>
+        </div>
+      	</div>
+          
+        </div>
+
+      <div class="mu sh sp abk">
+        <div class="mv">
+          <h6 class="abd">About </h6>
+          <ul class="dc atd">
+            <li><span class="glyphicon glyphicon-user"></span> Position <label style="color: #336666"><%= user.designation %></label>
+            </li><li><span class="glyphicon glyphicon-phone"></span> Contact Number <label style="color: #336666"><%= user.contact %></label>
+            </li></ul>
+        </div>
+      </div>
+
+      
+    	</div>
+
+
+		</div>
+
+
+           <div class="col-md-4">
+            
+                <div class="mu sh sp abk">
+                <div class="mv">
+
+                  <form >
+                 <div class="form-group">
+                    <label for="exampleInputPassword1">Employee Number</label><br>
+                    <label class="control-label" style="color: #336666">EMP <%= user.login_idlogin %></label><!--datadase connecting point--> 
+                  </div>
+
+                  <div class="form-group" style="margin-top: 20px;" >
+                    <label for="exampleInputEmail1">Email address</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.username %></label> <!--datadase connecting point-->
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">First Name</label><br>
+                    <label class="control-label" style="color: #336666" ><%= user.fname %></label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Last Name</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.lname %></label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">NIC Number</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.nic %></label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">EPF Number</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.EPF %></label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Birth Day</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.birthday %></label><!--datadase connecting point--> 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Address</label><br>
+                    <label class="control-label" style="color: #336666"><%= user.address %></label><!--datadase connecting point--> 
+                  </div>
+                  
+                  <!-- Trigger the modal with a button -->
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Update Details</button>
+                </form>
+            </div>
+            </div>
+        </div>
+<!-- Calender Section  -->
+		
+      <div class="col-md-5" " >
+      <div class="mu sh sp abk">
+
+          <div class="mv">
+              <div class="embed-responsive embed-responsive-4by3">
+                <center>
+                <iframe src="https://calendar.google.com/calendar/embed?src=32sbb14ul1v9irvgu6nhd1gr14%40group.calendar.google.com&ctz=Asia/Colombo" style="border: 0" frameborder="0" scrolling="no"></iframe>
+                </center>
+          </div>
+          </div>
+     
+      </div>
+      </div>  
+
+
+<!-- Calender Section -->
+
+	</div>
+
+</div>
+
+<!--PopUp edit panel -->
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+    <!-- Modal content-->
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Updating Profile</h4>
+              </div>
+              <div class="modal-body">
+               
+                        <form action="/updating" role="form"  method="post">
+                               <div class="form-group" >
+                                  <label for="exampleInputEmail1">First Name</label>
+                                  <input type="text" name="fname2" class="form-control" ng-model="Fname" id="exampleInputEmail1" value="<%= user.fname %>">
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleInputPassword1">Last Name</label>                                 
+                                  <input type="text" name="lname2" class="form-control" ng-model="Lname" id="exampleInputPassword1" value="<%= user.lname %>">
+                                </div>
+                                 <div class="form-group" >
+                                   <label for="exampleInputEmail1">NIC Number</label>
+                                   <input type="text" name="nic2" class="form-control" ng-model="Enum" id="exampleInputEmail1" value="<%= user.nic %>" >
+                                </div>
+                                <div class="form-group">
+                                      <label for="exampleInputPassword1">EPF Number</label>
+                                     <input type="text" name="epf2" class="form-control" ng-model="EPFnum" id="exampleInputPassword1" value="<%= user.EPF %>">
+                                 </div>
+                                 <div class="form-group">
+                                      <label for="exampleInputPassword1">Birthday</label>    
+                                      <input type="data" name="birthday2" class="form-control" ng-model="Birthday" id="exampleInputPassword1" value="<%= user.birthday %>">
+                                 </div>
+                                 <div class="form-group" >
+                                    <label for="comment">Contact Number</label>
+                                    <input type="text" name="contact2" class="form-control" ng-model="Address" id="exampleInputEmail1" value="<%= user.contact %>" >
+                                </div>
+                                 <div class="form-group" >
+                                    <label for="comment">Address</label>
+                                    <input type="text" name="address2" class="form-control" ng-model="Address" id="exampleInputEmail1" value="<%= user.address %>" >
+                                  </div>
+                                  <div class="form-group" >
+                                    <label for="comment">Designation</label>
+                                    <input type="text" name="designation2" class="form-control" ng-model="Designetion" id="exampleInputEmail1" value="<%= user.designation %>" >
+                                  </div>
+                                  <div class="form-group">
+                                    ​<label for="comment" >Description</label>
+                                    <textarea name="description2" class="form-control" rows="5" id="comment"> <%= user.description %></textarea>
+                                  </div>
+                                  <div class="form-group">
+                                   <!-- Trigger the modal with a button -->
+                                   <input type="hidden" name="_method" value="put" />
+                                   <button type="submit" class="btn btn-default btn pull-left ">Submit</button>
+                                   <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
+                                    
+                                  </div>
+                          
+                       </form> 
+                        </div>
+                            
+                         
+                        </div>
+                      </div>
+                      
+                    </div>
+
+
+
+<!-- -->
+
+
+
+    <!--  upload pop up menu  -->
+<div class="modal fade" id="myupload" role="dialog">
+    <div class="modal-dialog">
+    
+    <!-- Modal content-->
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Upload a picture</h4>
+              </div>
+              <div class="modal-body">
+               
+                    <form ref='uploadForm' 
+                      id='uploadForm' 
+                      action='/profilepic' 
+                      method='post' 
+                      encType="multipart/form-data">
+                        <input type="file" name="sampleFile" />
+                        <br/>
+                        <input type='submit' value='Upload!' />
+                    </form>
+                         
+              </div>
+                            
+                         
+             </div>
+          </div>
+                      
+        </div>
+
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+<br/>
+
+
+</body>
+
+</html>

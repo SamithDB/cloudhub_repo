@@ -99,8 +99,15 @@
           url = doc[google.picker.Document.URL];
         }
         var message = url;
+         myFunction(url);
         document.getElementById('result').innerHTML = message;
 }
+
+//Copy Url to input
+function myFunction(url) {
+    document.getElementById("myText").value = url;
+}
+
 
       function listFiles() {
 var request = gapi.client.drive.files.list({
@@ -154,11 +161,11 @@ function retrieveAllFiles(callback) {
              <img src="https://davecarty.files.wordpress.com/2015/10/google-drive-logo-2014.jpg" style="width: 450px; height: 450px">
            
             <div class="heading-headline">
-              Select Google Drive File
+              Share files with others!
             </div>
 
             <p>
-              The plugin also support locales, which allow you to open the Picker using the language of your choice :
+              Make sure to turn shareable on for those files. 
               <a href="#" data-toggle="modal" data-target="#language"></a>
             </p>
 
@@ -194,7 +201,8 @@ function retrieveAllFiles(callback) {
                     </div>
                     <div class="form-group">
 						  
-                          <input class="form-control" rows="3" name="url" ><div id="result"></div></input>
+                     <input class="form-control" id="myText" rows="3" name="url" value="URL Of Code " ></input>
+                   
                     </div>
                     <div>
                       <%
@@ -207,8 +215,9 @@ function retrieveAllFiles(callback) {
                       <input name="msgtype" type="hidden" value="url" >
                     </div>
                     <div class="row">              
-                    <div class="col-md-10 col-sm-5" align="left">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send  </button></div>
+                    <div class="col-md-10 col-sm-5" align="left">  <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Share  </button>
                     <button type="button" class="btn btn-defaultbtn pull-right" data-dismiss="modal">Close</button>
+                    </div>
                     </div>
 
                     </form>
